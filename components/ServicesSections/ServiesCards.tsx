@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
 }
 
 export default function ServicesCards() {
-  const cardsRef = useRef([]);
+
   const [isClient, setIsClient] = useState(false);
 
   // Services Data with content-related images
@@ -160,11 +160,13 @@ export default function ServicesCards() {
 
   }, [isClient]);
 
-  const addCardToRefs = (el) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
+const cardsRef = useRef<HTMLDivElement[]>([]);
+const addCardToRefs = (el: HTMLDivElement | null) => {
+  if (el && !cardsRef.current.includes(el)) {
+    cardsRef.current.push(el);
+  }
+};
+
 
   // Split services into 3 rows
   const row1 = services.slice(0, 3);
