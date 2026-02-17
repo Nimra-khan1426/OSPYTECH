@@ -1,0 +1,95 @@
+/* ===== BLACK PREMIUM SECTION ===== */
+.ats {
+  position: relative;
+  padding: 5rem 3rem;
+  color: #fff;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+  overflow: hidden;
+  height: 100%;
+  background-color: #000;
+}
+
+/* GRID */
+.ats .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0rem;
+}
+
+@media (min-width: 768px) {
+  .ats .md\:grid-cols-2 {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+/* ===== STACKED IMAGE CARDS ===== */
+.stack-wrap {
+  position: relative;
+  width: 300px;
+  height: 380px; /* Fixed height for better control */
+  margin: auto;
+  perspective: 1200px;
+}
+
+.stack-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* Animation styling for stacked cards */
+.stack-wrap .absolute {
+  transition: all 0.4s ease-in-out;
+}
+
+/* ===== TEXT PREMIUM STYLE ===== */
+.ats h3 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.3px;
+}
+
+.ats .text-gray-500 {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-bottom: 2rem;
+}
+
+.ats .text-lg {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: #d1d5db;
+  max-width: 380px;
+}
+
+.ats .rounded-full {
+  border-radius: 50%;
+}
+
+.ats button {
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ats button:hover {
+  background: #facc15;
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* Remove conflicting default styles that might override motion animations */
+.stack-wrap .motion-div {
+  will-change: transform, opacity;
+}
+
+/* Ensure proper z-index for animations */
+.stack-wrap > * {
+  will-change: transform, opacity;
+}

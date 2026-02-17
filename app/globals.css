@@ -1,0 +1,257 @@
+/* globals.css or your global stylesheet */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  margin: 0;
+  padding: 0;
+}
+.site-header {
+  /* Fixed at the top, like Apple websites */
+  position: fixed;
+  top: 10px; 
+  left: 0;
+  right: 0;
+  z-index: 1000; /* High z-index to stay above other content */
+  width: 100%;
+   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+.glass-bar {
+  /* Glossy grayish transparent background, like Apple's glassmorphism */
+  background:#ffffff; /* Grayish with 30% opacity */
+  backdrop-filter: blur(10px); /* Glass effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+   /* Subtle glossy border */
+  box-shadow: 0 4px 6px rgba(15, 166, 85, 0.1); /* Soft shadow for depth */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem; /* Increased horizontal padding for more space from sides */
+  color: rgb(12, 12, 12); /* White text */
+  max-width: 900px; /* Max width like Apple for centering */
+  margin: 0 auto; /* Center the bar horizontally */
+  border-radius: 20px; /* Slight rounding for square-ish look */
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #016712;
+}
+
+.nav {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.nav a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  transition: color 0.3s;
+ 
+  
+}
+
+.nav a:hover {
+  color: #016712;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.auth {
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px; /* Reduced for more square look */
+  overflow: hidden;
+
+}
+
+.auth-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: #016712;
+  transition: transform 0.3s ease;
+  border-radius: 5px; /* Match the square look */
+}
+
+.auth button {
+  background: none;
+ border: none;
+  padding: 0.5rem 1rem;
+  color: rgb(4, 4, 4);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s;
+}
+
+.auth button.active {
+  color: #f5f3f3; /* Darker text when active for contrast */
+}
+
+
+
+
+
+
+
+
+
+
+/* globals.css mein add karein */
+
+/* Slider Animation */
+.slider-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slider-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 500ms ease-in-out;
+}
+
+.slider-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slider-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: all 500ms ease-in-out;
+}
+
+/* For form sliding */
+.form-slide {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dropdown base */
+.nav-item {
+  position: relative;
+}
+
+/* Submenu glass */
+.submenu {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 16px;
+  min-width: 700px;              /* 👈 wider like screenshot */
+  box-shadow: 0 15px 40px rgba(1, 103, 18, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 999;
+
+  /* 👇 GRID MAGIC */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 14px;
+}
+
+
+/* Show on hover */
+.nav-item:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Submenu links */
+.submenu a {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  color: #000;
+  font-size: 0.9rem;
+  transition: all 0.25s ease;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.submenu a:hover {
+  background: rgba(1, 103, 18, 0.08);
+  transform: translateY(-2px);
+}
+
+
+/* Icon animation */
+/* Icons inside submenu */
+.submenu a svg {
+  color: #016712;       /* primary green */
+  width: 18px;
+  height: 18px;
+  transform: scale(0) rotate(-20deg);
+  opacity: 0;
+  animation: iconCreate 0.4s ease forwards;
+}
+
+/* Animate on hover parent (submenu show) */
+.nav-item:hover .submenu a svg {
+  animation: iconCreate 0.4s ease forwards;
+}
+
+/* Keyframes for “create / draw” effect */
+@keyframes iconCreate {
+  0% {
+    transform: scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2) rotate(5deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+/* Submenu icons */
+/* Submenu icons - साइज़ बड़ा किया */
+.menu-items-icon-img {
+  width: 40px;  /* पहले 20px था */
+  height: 40px; /* पहले 20px था */
+  margin-right: 12px; /* थोड़ा ज्यादा spacing */
+  transform: scale(0) rotate(-20deg);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* Animate icons on submenu hover */
+.nav-item:hover .submenu a .menu-items-icon-img {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+/* Submenu description text */
+.submenu-desc {
+  font-size: 0.75rem;
+  color: #000;
+  opacity: 0.4;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+html {
+  scroll-behavior: smooth;
+}
+
