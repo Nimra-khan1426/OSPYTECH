@@ -7,7 +7,38 @@ import { useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { urlFor } from "@/sanity/lib/image";
 
-export default function MinimalAboutGrid({data}) {
+interface Metric {
+  value: number;
+  label: string;
+  suffix: string;
+}
+
+interface GridItem {
+  category: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  stats: string;
+  color: string;
+  image: any; // Consider using a proper Sanity image type
+}
+
+interface AboutData {
+  headingLight: string;
+  headingBold: string;
+  subtitle: string;
+  focusTitle: string;
+  focusDescription: string;
+  highlightText: string;
+  metrics: Metric[];
+  gridItems: GridItem[];
+}
+
+interface MinimalAboutGridProps {
+  data: AboutData;
+}
+
+export default function MinimalAboutGrid({ data }: MinimalAboutGridProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [countersStarted, setCountersStarted] = useState(false);
@@ -17,7 +48,10 @@ export default function MinimalAboutGrid({data}) {
   const isSectionInView = useInView(sectionRef, { once: false, amount: 0.3 });
   const isGridInView = useInView(gridRef, { once: false, amount: 0.3 });
   
-const router = useRouter();
+  const router = useRouter();
+
+  // ... rest of your component code
+
 
   // Start counters when section comes into view
   useEffect(() => {

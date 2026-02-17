@@ -113,16 +113,19 @@ export default function CTA() {
                 display: "inline-block",
                 textAlign: "center"
               }}
-              onMouseEnter={(e) => {
-                e.target.style.background = "#000000";
-                e.target.style.transform = "translateY(-2px)";
-                e.target.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.2)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "#000000";
-                e.target.style.transform = "translateY(0)";
-                e.target.style.boxShadow = "none";
-              }}
+            onMouseEnter={(e) => {
+  const target = e.currentTarget as HTMLAnchorElement; // cast to correct HTML element type
+  target.style.background = "#000000";
+  target.style.transform = "translateY(-2px)";
+  target.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.2)";
+}}
+
+onMouseLeave={(e) => {
+  const target = e.currentTarget as HTMLAnchorElement;
+  target.style.background = "#000000";
+  target.style.transform = "translateY(0)";
+  target.style.boxShadow = "none";
+}}
             >
               Contact Us
             </a>
@@ -143,14 +146,16 @@ export default function CTA() {
                 cursor: "pointer",
                 padding: "0"
               }}
-              onMouseEnter={(e) => {
-                e.target.style.color = "#01550f";
-                e.target.style.textDecoration = "underline";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.color = "#016712";
-                e.target.style.textDecoration = "none";
-              }}
+            onMouseEnter={(e) => {
+  const target = e.currentTarget as HTMLAnchorElement; // cast to <a> element
+  target.style.color = "#01550f";
+  target.style.textDecoration = "underline";
+}}
+onMouseLeave={(e) => {
+  const target = e.currentTarget as HTMLAnchorElement;
+  target.style.color = "#016712";
+  target.style.textDecoration = "none";
+}}
             >
               Learn more
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

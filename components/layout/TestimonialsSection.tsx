@@ -1,8 +1,40 @@
 "use client";
 import { Twitter, Facebook, Instagram, ExternalLink, Star, Quote, Heart } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+type SocialType = "twitter" | "facebook" | "instagram";
+type SocialConfig = {
+  icon: any;
+  color: string;
+  hoverColor: string;
+  gradient?: string; // 👈 optional
+};
 
-const tweets = [
+const socialColors: Record<SocialType, SocialConfig> = {
+  twitter: {
+    icon: Twitter,
+    color: "#1DA1F2",
+    hoverColor: "#0d8bd9",
+  },
+  facebook: {
+    icon: Facebook,
+    color: "#1877F2",
+    hoverColor: "#0d66d9",
+  },
+  instagram: {
+    icon: Instagram,
+    color: "#E4405F",
+    hoverColor: "#d32a4a",
+    gradient:
+      "linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D)",
+  },
+};
+const tweets: {
+  name: string;
+  handle: string;
+  text: string;
+  avatar: string;
+  socialIcon: SocialType;
+}[] =[
   {
     name: "Alex",
     handle: "@alxxrah",
@@ -62,33 +94,24 @@ const tweets = [
 ];
 
 // Color schemes for different social icons
-const socialColors = {
-  twitter: { icon: Twitter, color: "#1DA1F2", hoverColor: "#0d8bd9" },
-  facebook: { icon: Facebook, color: "#1877F2", hoverColor: "#0d66d9" },
-  instagram: { 
-    icon: Instagram, 
-    color: "#E4405F", 
-    hoverColor: "#d32a4a",
-    gradient: "linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D)"
-  },
-};
 
 export default function TestimonialsSection() {
-  const containerRef = useRef(null);
-  const cardRefs = useRef([]);
+ 
   const [mounted, setMounted] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const [cardHeights, setCardHeights] = useState([]);
+const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+const containerRef = useRef<HTMLDivElement | null>(null);
+const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+const [cardHeights, setCardHeights] = useState<number[]>([]);
 
   // Calculate text height based on content
-  const calculateTextHeight = (text) => {
-    const baseHeight = 80; // Base height for header and padding
-    const lineHeight = 24; // Line height for text
-    const words = text.split(' ');
-    const estimatedLines = Math.ceil(words.length / 6); // Rough estimate: 6 words per line
-    return baseHeight + (estimatedLines * lineHeight);
-  };
-
+// TypeScript-safe
+const calculateTextHeight = (text: string): number => {
+  const baseHeight = 80; // Base height for header and padding
+  const lineHeight = 24; // Line height for text
+  const words = text.split(' ');
+  const estimatedLines = Math.ceil(words.length / 6); // Rough estimate: 6 words per line
+  return baseHeight + (estimatedLines * lineHeight);
+};
   useEffect(() => {
     setMounted(true);
     
@@ -104,7 +127,7 @@ export default function TestimonialsSection() {
       const container = containerRef.current;
       if (!container) return;
 
-      const items = container.children;
+      const items = container.children as HTMLCollectionOf<HTMLElement>;
       const gap = 20;
       const containerWidth = container.offsetWidth;
       
@@ -112,7 +135,7 @@ export default function TestimonialsSection() {
       const isMobile = containerWidth < 768;
       const columns = isMobile ? 2 : 3;
       const itemWidth = (containerWidth - (gap * (columns - 1))) / columns;
-      
+     
       if (columns <= 0 || items.length === 0) return;
 
       // Reset positions
@@ -168,12 +191,13 @@ export default function TestimonialsSection() {
     const timer = setTimeout(arrangeMasonry, 200);
 
     // Debounced resize handler
-    let resizeTimer;
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(arrangeMasonry, 250);
-    };
+  // Correctly typed
+let resizeTimer: ReturnType<typeof setTimeout>;
 
+const handleResize = () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(arrangeMasonry, 250);
+};
     window.addEventListener('resize', handleResize);
     return () => {
       clearTimeout(timer);
@@ -185,29 +209,32 @@ export default function TestimonialsSection() {
   useEffect(() => {
     if (!mounted || cardRefs.current.length === 0) return;
 
-    const updateHeights = () => {
-      const newHeights = cardRefs.current.map((cardRef, index) => {
-        if (!cardRef) return calculateTextHeight(tweets[index]?.text || '');
-        
-        const contentDiv = cardRef.querySelector('.card-content');
-        if (contentDiv) {
-          return contentDiv.offsetHeight + 40; // Add padding
-        }
-        return calculateTextHeight(tweets[index]?.text || '');
-      });
-      
-      setCardHeights(newHeights);
-    };
+  const updateHeights = () => {
+  const newHeights = cardRefs.current.map((cardRef, index) => {
+    if (!cardRef) return calculateTextHeight(tweets[index]?.text || '');
+    
+    const contentDiv = cardRef.querySelector('.card-content') as HTMLDivElement;
+    if (contentDiv) {
+      // Add extra padding for hover effects + top accent line + bottom indicator
+      return contentDiv.offsetHeight + 60; // previous 40 → 60
+    }
+    return calculateTextHeight(tweets[index]?.text || '');
+  });
+  
+  setCardHeights(newHeights);
+};
 
     // Update heights after a delay
     const timer = setTimeout(updateHeights, 300);
     return () => clearTimeout(timer);
   }, [mounted]);
 
-  const SocialIcon = ({ type, size = 20 }) => {
-    const { icon: Icon, color } = socialColors[type] || socialColors.twitter;
-    return <Icon size={size} color={color} />;
-  };
+ type SocialType = keyof typeof socialColors; // "twitter" | "facebook" | "instagram"
+
+const SocialIcon = ({ type, size = 20 }: { type: SocialType; size?: number }) => {
+  const { icon: Icon, color } = socialColors[type] || socialColors.twitter;
+  return <Icon size={size} color={color} />;
+};
 
   return (
     <div
@@ -347,14 +374,14 @@ export default function TestimonialsSection() {
           }}
         >
           {tweets.map((t, i) => {
-            const socialConfig = socialColors[t.socialIcon];
+           const socialConfig = socialColors[t.socialIcon as keyof typeof socialColors];
             const isHovered = hoveredCard === i;
             const cardHeight = cardHeights[i] || 140;
             
             return (
               <div
                 key={i}
-                ref={el => cardRefs.current[i] = el}
+              ref={el => { cardRefs.current[i] = el; }}
                 style={{
                   position: "absolute",
                   opacity: 0,
@@ -398,6 +425,7 @@ export default function TestimonialsSection() {
                       transform: isHovered ? "scaleX(1)" : "scaleX(0)",
                       transformOrigin: "left",
                       transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                          zIndex: 3,
                     }}
                   />
 
@@ -451,6 +479,8 @@ export default function TestimonialsSection() {
                             maskComposite: "exclude",
                             opacity: isHovered ? "1" : "0",
                             transition: "opacity 0.3s",
+                                zIndex: 3,
+                            
                           }}
                         />
                       </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -20,7 +21,7 @@ const SOCIAL_LOGOS = {
   github: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
 };
 
-export default function AuthPage() {
+function AuthPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
@@ -867,5 +868,12 @@ await updateProfile(user, { displayName: signupData.fullName });
         </div>
       </div>
     </div>
+  );
+}
+export default function AuthPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AuthPageContent />
+    </Suspense>
   );
 }
