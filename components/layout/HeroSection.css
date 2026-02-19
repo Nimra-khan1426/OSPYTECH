@@ -410,14 +410,15 @@
   }
 
   .hero-section {
-    padding-top: 40px;
+    padding-top: 0px;
     min-height: auto;
     align-items: flex-start;
   }
 
   .hero-container {
-    margin-top: 0;
-    padding: 60px 20px;
+    margin-top: -50;
+    padding-top: 180px;
+   
     min-height: auto;
   }
 
