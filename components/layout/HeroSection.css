@@ -421,4 +421,20 @@
   }
 
 }
+@media (max-width: 768px) {
+
+  .right-side {
+    display: none;
+  }
+
+  .hero-container {
+    flex-direction: column;
+    padding: 80px 20px;
+  }
+
+  .left-content {
+    width: 100%;
+  }
+
+}
   
