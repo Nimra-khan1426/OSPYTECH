@@ -400,41 +400,25 @@
   }
 }
 
-@media (max-width: 768px) {
 
-  .laptop-container {
-    width: 260px;
-    height: 170px;
-  }
 
-  .card {
-    width: 110px;
-    padding: 10px;
-  }
-
-  .card-title {
-    font-size: 11px;
-  }
-
-  .card-description {
-    font-size: 9px;
-  }
-
-}
+  
 @media (max-width: 768px) {
 
   .right-side {
     display: none;
   }
 
-  .hero-container {
-    flex-direction: column;
-    padding: 80px 20px;
+  .hero-section {
+    padding-top: 40px;
+    min-height: auto;
+    align-items: flex-start;
   }
 
-  .left-content {
-    width: 100%;
+  .hero-container {
+    margin-top: 0;
+    padding: 60px 20px;
+    min-height: auto;
   }
 
 }
-  
