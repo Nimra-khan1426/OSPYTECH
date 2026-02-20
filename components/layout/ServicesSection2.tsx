@@ -11,7 +11,6 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 
-
 const bottomRowServices = [
   {
     id: 5,
@@ -67,7 +66,7 @@ export default function ServicesSection2() {
     ...bottomRowServices
   ];
   
-const router = useRouter();
+  const router = useRouter();
 
   // One-time animation when section appears
   useEffect(() => {
@@ -83,50 +82,66 @@ const router = useRouter();
     const carousel = bottomCarouselRef.current;
     let animationId: number;
     let position = 0;
-    const speed = 0.8;
     
-    // Card measurements
-    const cardWidth = 300;
-    const cardGap = 20;
-    const totalCardWidth = cardWidth + cardGap;
+    // Card measurements - responsive card width
+    const getCardWidth = () => {
+      if (window.innerWidth <= 480) return 260;
+      if (window.innerWidth <= 640) return 280;
+      return 300;
+    };
     
-    // One complete set width (4 cards)
-    const oneSetWidth = bottomRowServices.length * totalCardWidth;
+    const cardGap = 16;
     
-    // Initial position - start from leftmost
-    position = -oneSetWidth; // Start with cards shifted left
+    const updateAnimation = () => {
+      const cardWidth = getCardWidth();
+      const totalCardWidth = cardWidth + cardGap;
+      const oneSetWidth = bottomRowServices.length * totalCardWidth;
+      
+      // Initial position - start from leftmost
+      position = -oneSetWidth;
 
-    const animate = () => {
-      position += speed; // POSITIVE for right-to-left movement
-      
-      // Jab hum original position se 2 sets aage chale jayein
-      if (position >= 0) {
-        // Reset to start position
-        position = -oneSetWidth;
+      const animate = () => {
+        position += 0.8; // POSITIVE for right-to-left movement
         
-        // Apply reset without animation
-        carousel.style.transition = 'none';
+        // Reset when we've moved through 2 sets
+        if (position >= 0) {
+          position = -oneSetWidth;
+          
+          // Apply reset without animation
+          carousel.style.transition = 'none';
+          carousel.style.transform = `translateX(${position}px)`;
+          
+          // Force reflow
+          void carousel.offsetHeight;
+          
+          // Re-enable smooth animation
+          carousel.style.transition = 'transform 0.1s linear';
+        }
+        
         carousel.style.transform = `translateX(${position}px)`;
-        
-        // Force reflow
-        void carousel.offsetHeight;
-        
-        // Re-enable smooth animation
-        carousel.style.transition = 'transform 0.1s linear';
-      }
-      
+        animationId = requestAnimationFrame(animate);
+      };
+
+      // Set initial position
       carousel.style.transform = `translateX(${position}px)`;
+      
+      // Start animation
       animationId = requestAnimationFrame(animate);
     };
 
-    // Set initial position
-    carousel.style.transform = `translateX(${position}px)`;
-    
-    // Start animation
-    animationId = requestAnimationFrame(animate);
+    updateAnimation();
+
+    // Handle resize
+    const handleResize = () => {
+      if (animationId) cancelAnimationFrame(animationId);
+      updateAnimation();
+    };
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
       if (animationId) cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -136,7 +151,7 @@ const router = useRouter();
       style={{
         position: 'relative',
         background: '#ffffff',
-        padding: '0px 0',
+        padding: '40px 0 20px',
         overflow: 'hidden',
         marginTop: '-30px'
       }}
@@ -191,25 +206,25 @@ const router = useRouter();
               overflow: 'hidden',
               width: '100%'
             }}>
-              {/* Left Gradient Fade */}
+              {/* Left Gradient Fade - Responsive */}
               <div style={{
                 position: 'absolute',
                 left: 0,
                 top: 0,
                 bottom: 0,
-                width: '150px',
+                width: 'min(150px, 15vw)',
                 background: 'linear-gradient(to right, white, transparent)',
                 zIndex: 20,
                 pointerEvents: 'none'
               }} />
               
-              {/* Right Gradient Fade */}
+              {/* Right Gradient Fade - Responsive */}
               <div style={{
                 position: 'absolute',
                 right: 0,
                 top: 0,
                 bottom: 0,
-                width: '150px',
+                width: 'min(150px, 15vw)',
                 background: 'linear-gradient(to left, white, transparent)',
                 zIndex: 20,
                 pointerEvents: 'none'
@@ -231,8 +246,9 @@ const router = useRouter();
                     key={`bottom-${service.id}-${index}`}
                     style={{
                       flexShrink: 0,
-                      margin: '0 10px',
-                      width: '300px'
+                      margin: '0 8px',
+                      width: 'min(300px, 85vw)',
+                      maxWidth: '300px'
                     }}
                   >
                     <motion.div 
@@ -243,7 +259,8 @@ const router = useRouter();
                         overflow: 'hidden',
                         boxShadow: '0 6px 24px rgba(0, 0, 0, 0.06)',
                         border: '1px solid rgba(243, 244, 246, 0.8)',
-                        height: '360px',
+                        height: 'auto',
+                        minHeight: '360px',
                         cursor: 'pointer'
                       }}
                       whileHover={{ 
@@ -254,9 +271,10 @@ const router = useRouter();
                       }}
                     >
                       
-                      {/* Service Image */}
+                      {/* Service Image - Responsive height */}
                       <div style={{
-                        height: '120px',
+                        height: 'min(120px, 30vw)',
+                        minHeight: '100px',
                         background: `url(${service.image}) center/cover`,
                         position: 'relative',
                         overflow: 'hidden'
@@ -271,7 +289,7 @@ const router = useRouter();
                           opacity: '0.15'
                         }} />
                         
-                        {/* Stats Badge */}
+                        {/* Stats Badge - Responsive sizing */}
                         <div style={{
                           position: 'absolute',
                           top: '12px',
@@ -281,10 +299,14 @@ const router = useRouter();
                           backdropFilter: 'blur(8px)',
                           borderRadius: '100px',
                           border: '1px solid rgba(229, 231, 235, 0.8)',
-                          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)'
+                          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
+                          maxWidth: 'calc(100% - 60px)',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
                         }}>
                           <span style={{
-                            fontSize: '11px',
+                            fontSize: 'clamp(10px, 3vw, 11px)',
                             fontWeight: '700',
                             background: service.gradient,
                             WebkitBackgroundClip: 'text',
@@ -295,13 +317,13 @@ const router = useRouter();
                           </span>
                         </div>
 
-                        {/* Icon */}
+                        {/* Icon - Responsive */}
                         <div style={{
                           position: 'absolute',
                           top: '12px',
                           left: '12px',
-                          width: '40px',
-                          height: '40px',
+                          width: 'clamp(36px, 8vw, 40px)',
+                          height: 'clamp(36px, 8vw, 40px)',
                           borderRadius: '10px',
                           background: 'white',
                           display: 'flex',
@@ -311,18 +333,20 @@ const router = useRouter();
                         }}>
                           <div style={{ 
                             color: service.gradient.split(',')[1].trim(),
-                            width: '20px',
-                            height: '20px'
+                            width: 'clamp(18px, 4vw, 20px)',
+                            height: 'clamp(18px, 4vw, 20px)'
                           }}>
                             {service.icon}
                           </div>
                         </div>
                       </div>
 
-                      {/* Content */}
-                      <div style={{ padding: '20px' }}>
+                      {/* Content - Responsive padding */}
+                      <div style={{ 
+                        padding: 'clamp(16px, 4vw, 20px)'
+                      }}>
                         <h3 style={{
-                          fontSize: '18px',
+                          fontSize: 'clamp(16px, 4vw, 18px)',
                           fontWeight: '700',
                           color: '#111827',
                           marginBottom: '8px',
@@ -333,14 +357,19 @@ const router = useRouter();
 
                         <p style={{
                           color: '#6B7280',
-                          fontSize: '13px',
+                          fontSize: 'clamp(12px, 3.5vw, 13px)',
                           lineHeight: '1.5',
                           marginBottom: '16px',
-                          minHeight: '36px'
+                          minHeight: '36px',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
                         }}>
                           {service.description}
                         </p>
 
+                        {/* Features - Responsive grid */}
                         <div style={{
                           display: 'flex',
                           flexWrap: 'wrap',
@@ -351,11 +380,11 @@ const router = useRouter();
                             <motion.span
                               key={idx}
                               style={{
-                                padding: '4px 10px',
+                                padding: '4px 8px',
                                 background: 'rgba(249, 250, 251, 0.8)',
                                 backdropFilter: 'blur(8px)',
                                 color: '#374151',
-                                fontSize: '11px',
+                                fontSize: 'clamp(10px, 3vw, 11px)',
                                 fontWeight: '600',
                                 borderRadius: '6px',
                                 border: '1px solid rgba(229, 231, 235, 0.6)'
@@ -381,12 +410,12 @@ const router = useRouter();
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: '6px',
-                            padding: '10px',
+                            padding: 'clamp(8px, 3vw, 10px)',
                             background: 'white',
                             border: `1px solid ${service.gradient.split(',')[1].trim()}40`,
                             borderRadius: '8px',
                             color: service.gradient.split(',')[1].trim(),
-                            fontSize: '13px',
+                            fontSize: 'clamp(12px, 3.5vw, 13px)',
                             fontWeight: '600',
                             cursor: 'pointer'
                           }}
@@ -396,7 +425,8 @@ const router = useRouter();
                             color: 'white',
                             boxShadow: `0 10px 30px ${service.gradient.split(',')[1].trim()}40`
                           }}
-                          transition={{ duration: 0.3 }}   onClick={() => router.push("/services")}
+                          transition={{ duration: 0.3 }}
+                          onClick={() => router.push("/services")}
                         >
                           <span>Explore</span>
                           <ArrowUpRight style={{ width: '14px', height: '14px' }} />
@@ -410,7 +440,7 @@ const router = useRouter();
           </motion.div>
         </div>
 
-        {/* Neeche ka Button - CTA Section */}
+        {/* Button - CTA Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
@@ -429,22 +459,25 @@ const router = useRouter();
           }}>
             <motion.button 
               style={{
-                padding: '15px 36px',
+                padding: 'clamp(12px, 4vw, 15px) clamp(24px, 6vw, 36px)',
                 background: 'linear-gradient(90deg, #0a0a0a, #070707)',
                 color: 'white',
                 fontWeight: '600',
-                fontSize: '14px',
+                fontSize: 'clamp(13px, 3.5vw, 14px)',
                 borderRadius: '10px',
                 border: 'none',
                 cursor: 'pointer',
-                boxShadow: '0 6px 24px rgba(15, 15, 15, 0.25)'
+                boxShadow: '0 6px 24px rgba(15, 15, 15, 0.25)',
+                width: 'fit-content',
+                whiteSpace: 'nowrap'
               }}
               whileHover={{ 
                 scale: 1.05,
                 y: -4,
                 boxShadow: '0 12px 40px rgba(34, 34, 35, 0.35)'
               }}
-              transition={{ duration: 0.3 }}   onClick={() => router.push("/services")}
+              transition={{ duration: 0.3 }}
+              onClick={() => router.push("/services")}
             >
               View All Services
             </motion.button>
@@ -460,6 +493,20 @@ const router = useRouter();
           }
           50% {
             transform: translateY(-20px) translateX(20px);
+          }
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+          .service-card {
+            height: auto !important;
+            min-height: 340px;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .service-card {
+            min-height: 320px;
           }
         }
       `}</style>

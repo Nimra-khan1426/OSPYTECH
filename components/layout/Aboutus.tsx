@@ -20,7 +20,7 @@ interface GridItem {
   description: string;
   stats: string;
   color: string;
-  image: any; // Consider using a proper Sanity image type
+  image: any;
 }
 
 interface AboutData {
@@ -50,9 +50,6 @@ export default function MinimalAboutGrid({ data }: MinimalAboutGridProps) {
   
   const router = useRouter();
 
-  // ... rest of your component code
-
-
   // Start counters when section comes into view
   useEffect(() => {
     if (isSectionInView && !countersStarted) {
@@ -72,7 +69,8 @@ export default function MinimalAboutGrid({ data }: MinimalAboutGridProps) {
   }, [isGridInView, gridInView]);
 
   const gridItems = data?.gridItems || [];
-const metrics = data?.metrics || [];
+  const metrics = data?.metrics || [];
+  
   const handleImageClick = (index: number) => {
     setSelectedIndex(index);
   };
@@ -197,14 +195,14 @@ const metrics = data?.metrics || [];
                   }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <span className="button-text"   onClick={() => router.push("/services")}>View Our Work</span>
+                  <span className="button-text" onClick={() => router.push("/services")}>View Our Work</span>
                   <div className="button-icon-wrapper">
                     <ArrowRight className="button-icon" />
                   </div>
                 </motion.button>
                 
                 <motion.button 
-                  className="secondary-cta"   onClick={() => router.push("/contact")}
+                  className="secondary-cta" onClick={() => router.push("/contact")}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -252,25 +250,25 @@ const metrics = data?.metrics || [];
                 }}
               >
                 <div className="image-wrapper">
-          <img 
-src={
-  gridItems[0]?.image
-    ? urlFor(gridItems[0].image).url()
-    : ""
-}
-
+                  <img 
+                    src={
+                      gridItems[0]?.image
+                        ? urlFor(gridItems[0].image).url()
+                        : ""
+                    }
+                    alt={gridItems[0]?.title || "Grid image"}
                     className="grid-image"
                   />
                   <motion.div 
                     className="category-tag"
                     style={{ 
-                      backgroundColor: hoveredIndex === 0 ? gridItems[0].color : 'rgba(255, 255, 255, 0.9)',
-                      color: hoveredIndex === 0 ? 'white' : gridItems[0].color,
-                      border: hoveredIndex === 0 ? 'none' : `2px solid ${gridItems[0].color}`
+                      backgroundColor: hoveredIndex === 0 ? gridItems[0]?.color : 'rgba(255, 255, 255, 0.9)',
+                      color: hoveredIndex === 0 ? 'white' : gridItems[0]?.color,
+                      border: hoveredIndex === 0 ? 'none' : `2px solid ${gridItems[0]?.color}`
                     }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    {gridItems[0].category}
+                    {gridItems[0]?.category}
                   </motion.div>
                 </div>
               </motion.div>
@@ -301,26 +299,25 @@ src={
                 }}
               >
                 <div className="image-wrapper">
-        <img 
-               
-src={
-  gridItems[1]?.image
-    ? urlFor(gridItems[1].image).url()
-    : ""
-}
-
+                  <img 
+                    src={
+                      gridItems[1]?.image
+                        ? urlFor(gridItems[1].image).url()
+                        : ""
+                    }
+                    alt={gridItems[1]?.title || "Grid image"}
                     className="grid-image"
                   />
                   <motion.div 
                     className="category-tag"
                     style={{ 
-                      backgroundColor: hoveredIndex === 1 ? gridItems[1].color : 'rgba(255, 255, 255, 0.9)',
-                      color: hoveredIndex === 1 ? 'white' : gridItems[1].color,
-                      border: hoveredIndex === 1 ? 'none' : `2px solid ${gridItems[1].color}`
+                      backgroundColor: hoveredIndex === 1 ? gridItems[1]?.color : 'rgba(255, 255, 255, 0.9)',
+                      color: hoveredIndex === 1 ? 'white' : gridItems[1]?.color,
+                      border: hoveredIndex === 1 ? 'none' : `2px solid ${gridItems[1]?.color}`
                     }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    {gridItems[1].category}
+                    {gridItems[1]?.category}
                   </motion.div>
                 </div>
               </motion.div>
@@ -355,24 +352,24 @@ src={
               >
                 <div className="image-wrapper">
                   <img 
-               
-src={
-  gridItems[2]?.image
-    ? urlFor(gridItems[2].image).url()
-    : ""
-}
+                    src={
+                      gridItems[2]?.image
+                        ? urlFor(gridItems[2].image).url()
+                        : ""
+                    }
+                    alt={gridItems[2]?.title || "Grid image"}
                     className="grid-image"
                   />
                   <motion.div 
                     className="category-tag"
                     style={{ 
-                      backgroundColor: hoveredIndex === 2 ? gridItems[2].color : 'rgba(255, 255, 255, 0.9)',
-                      color: hoveredIndex === 2 ? 'white' : gridItems[2].color,
-                      border: hoveredIndex === 2 ? 'none' : `2px solid ${gridItems[2].color}`
+                      backgroundColor: hoveredIndex === 2 ? gridItems[2]?.color : 'rgba(255, 255, 255, 0.9)',
+                      color: hoveredIndex === 2 ? 'white' : gridItems[2]?.color,
+                      border: hoveredIndex === 2 ? 'none' : `2px solid ${gridItems[2]?.color}`
                     }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    {gridItems[2].category}
+                    {gridItems[2]?.category}
                   </motion.div>
                 </div>
               </motion.div>
@@ -403,26 +400,25 @@ src={
                 }}
               >
                 <div className="image-wrapper">
-                    <img 
+                  <img 
                     src={
-  gridItems[3]?.image
-    ? urlFor(gridItems[3].image).url()
-    : ""
-}
-              
-
+                      gridItems[3]?.image
+                        ? urlFor(gridItems[3].image).url()
+                        : ""
+                    }
+                    alt={gridItems[3]?.title || "Grid image"}
                     className="grid-image"
                   />
                   <motion.div 
                     className="category-tag"
                     style={{ 
-                      backgroundColor: hoveredIndex === 3 ? gridItems[3].color : 'rgba(255, 255, 255, 0.9)',
-                      color: hoveredIndex === 3 ? 'white' : gridItems[3].color,
-                      border: hoveredIndex === 3 ? 'none' : `2px solid ${gridItems[3].color}`
+                      backgroundColor: hoveredIndex === 3 ? gridItems[3]?.color : 'rgba(255, 255, 255, 0.9)',
+                      color: hoveredIndex === 3 ? 'white' : gridItems[3]?.color,
+                      border: hoveredIndex === 3 ? 'none' : `2px solid ${gridItems[3]?.color}`
                     }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    {gridItems[3].category}
+                    {gridItems[3]?.category}
                   </motion.div>
                 </div>
               </motion.div>
@@ -438,7 +434,7 @@ src={
               <div className="footer-indicator">
                 <div className="indicator-text">
                   {hoveredIndex !== null ? 
-                    `Hovering ${gridItems[hoveredIndex].category}` : 
+                    `Hovering ${gridItems[hoveredIndex]?.category}` : 
                     'Click for details'
                   }
                 </div>
@@ -495,17 +491,17 @@ src={
               >
                 <img 
                   src={urlFor(gridItems[selectedIndex]?.image).url()} 
-  alt={gridItems[selectedIndex]?.title}
+                  alt={gridItems[selectedIndex]?.title}
                   className="card-main-image"
                 />
                 <motion.div 
                   className="floating-card-category-tag"
-                  style={{ backgroundColor: gridItems[selectedIndex].color }}
+                  style={{ backgroundColor: gridItems[selectedIndex]?.color }}
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  {gridItems[selectedIndex].category}
+                  {gridItems[selectedIndex]?.category}
                 </motion.div>
               </motion.div>
               
@@ -516,13 +512,13 @@ src={
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <h3 className="floating-card-title">{gridItems[selectedIndex].title}</h3>
-                  <p className="floating-card-subtitle">{gridItems[selectedIndex].subtitle}</p>
+                  <h3 className="floating-card-title">{gridItems[selectedIndex]?.title}</h3>
+                  <p className="floating-card-subtitle">{gridItems[selectedIndex]?.subtitle}</p>
                   <p className="floating-card-description">
-                    {gridItems[selectedIndex].description}
+                    {gridItems[selectedIndex]?.description}
                   </p>
                   <div className="floating-card-stats">
-                    <span className="stat-value">{gridItems[selectedIndex].stats}</span>
+                    <span className="stat-value">{gridItems[selectedIndex]?.stats}</span>
                   </div>
                 </motion.div>
                 <motion.div 
@@ -531,7 +527,7 @@ src={
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <button className="floating-card-button"   onClick={() => router.push("/services")}>
+                  <button className="floating-card-button" onClick={() => router.push("/services")}>
                     Explore Solution
                     <ExternalLink className="icon" />
                   </button>
@@ -543,23 +539,22 @@ src={
       </AnimatePresence>
 
       <style>{`
-       
         /* Section */
         .minimal-section {
           min-height: 100vh;
           background: #ffffff;
           padding: 3rem 1.5rem;
-          
           position: relative;
           overflow: hidden;
         }
 
         .container {
-          max-width: auto;
+          max-width: 1400px;
           margin: 0 auto;
+          width: 100%;
         }
 
-        /* Minimal Header - ANIMATION HATA DI */
+        /* Minimal Header */
         .minimal-header {
           text-align: left;
           margin-bottom: 2rem;
@@ -576,7 +571,7 @@ src={
 
         .minimal-header h1 .bold {
           font-weight: 600;
-          color :#016712;
+          color: #016712;
         }
 
         .subtitle {
@@ -588,7 +583,7 @@ src={
           text-align: left;
         }
 
-        /* Split Layout - Content on left, smaller grid on right */
+        /* Split Layout */
         .split-layout {
           display: grid;
           grid-template-columns: 1.2fr 1fr;
@@ -596,7 +591,7 @@ src={
           align-items: start;
         }
 
-        /* Left Side - Minimal Content */
+        /* Left Side */
         .left-side {
           position: sticky;
           top: 1rem;
@@ -609,7 +604,7 @@ src={
         .accent-line {
           width: 40px;
           height: 2px;
-          background: linear-gradient(90deg, #016712 , #016712 );
+          background: linear-gradient(90deg, #016712, #016712);
           margin-bottom: 1rem;
         }
 
@@ -707,7 +702,7 @@ src={
           gap: 1rem;
           background: linear-gradient(135deg, #000, #000000);
           color: #fff;
-          padding:0.875rem 1.5rem;
+          padding: 0.875rem 1.5rem;
           border-radius: 0.75rem;
           font-size: 0.875rem;
           font-weight: 500;
@@ -776,19 +771,19 @@ src={
         .right-side {
           overflow: visible;
           height: fit-content;
+          width: 100%;
         }
 
-        /* ========== MANUAL GRID LAYOUT ========== */
-        /* Magazine Row - Grid layout with proper spacing */
+        /* Magazine Row */
         .magazine-row {
           display: grid;
-          grid-template-columns: 2fr 1fr; /* First row: big (2 parts) left, small (1 part) right */
+          grid-template-columns: 2fr 1fr;
           gap: 0.75rem;
           margin-bottom: 0.75rem;
         }
 
         .second-row {
-          grid-template-columns: 1fr 2fr; /* Second row: small (1 part) left, big (2 parts) right */
+          grid-template-columns: 1fr 2fr;
         }
 
         .grid-cell {
@@ -797,6 +792,7 @@ src={
           transition: all 0.3s ease;
           overflow: hidden;
           border-radius: 12px;
+          width: 100%;
         }
 
         .grid-cell.hovered {
@@ -818,22 +814,21 @@ src={
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Big images - Portrait style (taller than wide) */
+        /* Desktop Styles - Fixed heights (as original) */
         .grid-cell.big {
-          aspect-ratio: 5.8/5; /* Height is 4/3 of width */
-          height: 290px; /* Fixed height for consistency */
+          aspect-ratio: 4/5;
+          height: 290px;
         }
 
-        /* Small images - Square style */
         .grid-cell.small {
-          aspect-ratio: 1/1.7; /* Perfect square */
-          height: 290px; /* Fixed height */
+          aspect-ratio: 3/4;
+          height: 290px;
         }
 
         .grid-image {
           width: 100%;
           height: 100%;
-          object-fit: cover; /* Crop to fill container without distortion */
+          object-fit: cover;
           display: block;
           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -901,7 +896,7 @@ src={
           background: #1a1a1a;
         }
 
-        /* Floating Card Overlay - Appears on click */
+        /* Floating Card Overlay */
         .floating-card-overlay {
           position: fixed;
           top: 0;
@@ -1034,22 +1029,8 @@ src={
         }
 
         /* ========== RESPONSIVE DESIGN ========== */
-        /* Large screens (1200px and above) */
-        @media (max-width: 1200px) {
-          .container {
-            max-width: 1000px;
-          }
-          
-          .grid-cell.big {
-            height: 280px;
-          }
-          
-          .grid-cell.small {
-            height: 135px;
-          }
-        }
 
-        /* Medium-large screens (1024px - 1200px) */
+        /* Tablet Landscape (1024px) */
         @media (max-width: 1024px) {
           .split-layout {
             grid-template-columns: 1fr;
@@ -1062,182 +1043,255 @@ src={
           
           .content-block {
             padding-right: 0;
+            max-width: 600px;
+            margin: 0;
           }
           
           .minimal-header h1 {
             font-size: 2.5rem;
           }
           
-          .magazine-row {
-            grid-template-columns: 1fr 1fr; /* Equal columns on medium screens */
-            gap: 0.75rem;
-            max-width: 600px;
-            margin: 0 auto 0.75rem;
-          }
-          
-          .second-row {
-            grid-template-columns: 1fr 1fr;
-          }
-          
-          .minimal-header {
-            text-align: center;
-          }
-          
-          .subtitle {
-            text-align: center;
-            margin: 0 auto;
+          .metric-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
           }
           
           .button-container {
-            justify-content: center;
+            justify-content: flex-start;
+          }
+          
+          .right-side {
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
           }
           
           .grid-cell.big {
-            height: 250px;
-            aspect-ratio: 4/3; /* More landscape on medium screens */
+            height: 260px;
           }
           
           .grid-cell.small {
-            height: 120px;
-            aspect-ratio: 4/3; /* More landscape on medium screens */
-          }
-          
-          .floating-card {
-            max-width: 400px;
+            height: 260px;
           }
         }
 
-        /* Medium screens (768px - 1024px) */
+        /* Tablet Portrait (768px) */
         @media (max-width: 768px) {
-          .magazine-row {
-            grid-template-columns: 1fr; /* Single column on mobile */
-            gap: 0.75rem;
-            max-width: 400px;
-            margin: 0 auto 0.75rem;
-          }
-          
-          .second-row {
-            grid-template-columns: 1fr;
-          }
-          
           .minimal-section {
             padding: 2rem 1rem;
           }
           
-          .grid-cell.big {
-            height: 220px;
-            aspect-ratio: 4/3; /* Landscape on mobile */
-          }
-          
-          .grid-cell.small {
-            height: 110px;
-            aspect-ratio: 4/3; /* Landscape on mobile */
+          .minimal-header h1 {
+            font-size: 2.2rem;
           }
           
           .metric-grid {
-            grid-template-columns: 1fr;
-          }
-          
-          .footer-indicator {
-            flex-direction: column;
-            gap: 1rem;
-            text-align: center;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
           }
           
           .button-container {
-            flex-direction: column;
-            align-items: stretch;
+            flex-direction: row;
+            justify-content: flex-start;
           }
           
-          .minimal-cta,
-          .secondary-cta {
-            justify-content: center;
+          .right-side {
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
           }
           
-          .floating-card {
-            max-width: 350px;
+          .grid-cell.big {
+            height: 220px;
           }
           
-          .floating-card-image {
-            height: 180px;
+          .grid-cell.small {
+            height: 220px;
+          }
+          
+          .footer-indicator {
+            flex-direction: row;
+            justify-content: space-between;
           }
         }
 
-        /* Small screens (640px - 768px) */
+        /* Mobile Large (640px) */
         @media (max-width: 640px) {
           .minimal-header h1 {
             font-size: 2rem;
           }
           
-          .title {
-            font-size: 1.125rem;
+          .subtitle {
+            text-align: left;
           }
           
-          .grid-cell.big {
-            height: 200px;
+          .metric-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
           }
           
+          .metric-value {
+            font-size: 1.4rem;
+          }
+          
+          .button-container {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+          }
+          
+          .minimal-cta, .secondary-cta {
+            width: auto;
+          }
+          
+          .right-side {
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
+          }
+          
+          /* FIXED: Remove fixed heights and use aspect-ratio for mobile */
+          .grid-cell.big,
           .grid-cell.small {
-            height: 100px;
+            height: auto;
+            aspect-ratio: 3/4;
           }
           
+          .magazine-row {
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+          }
+          
+          .category-tag {
+            font-size: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            top: 0.5rem;
+            left: 0.5rem;
+          }
+        }
+
+        /* Mobile Medium (480px) */
+        @media (max-width: 480px) {
+          .minimal-header h1 {
+            font-size: 1.8rem;
+          }
+          
+          .title {
+            font-size: 1.3rem;
+          }
+          
+          .metric-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+          }
+          
+          .metric-value {
+            font-size: 1.3rem;
+          }
+          
+          .metric-label {
+            font-size: 0.65rem;
+          }
+          
+          .right-side {
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
+          }
+          
+          /* FIXED: Adjust aspect-ratio for smaller screens */
+          .grid-cell.big,
+          .grid-cell.small {
+            aspect-ratio: 2/3;
+          }
+          
+          .magazine-row {
+            gap: 0.4rem;
+            margin-bottom: 0.4rem;
+          }
+          
+          .footer-indicator {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-start;
+          }
+          
+          .indicator-dots {
+            justify-content: flex-start;
+          }
+        }
+
+        /* Mobile Small (400px) */
+        @media (max-width: 400px) {
+          .minimal-header h1 {
+            font-size: 1.5rem;
+          }
+          
+          .brief {
+            font-size: 0.8rem;
+          }
+          
+          .metric-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+          }
+          
+          .metric-value {
+            font-size: 1.1rem;
+          }
+          
+          .right-side {
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
+          }
+          
+          .grid-cell.big,
+          .grid-cell.small {
+            aspect-ratio: 2/3;
+          }
+          
+          .magazine-row {
+            gap: 0.3rem;
+            margin-bottom: 0.3rem;
+          }
+          
+          .category-tag {
+            font-size: 0.45rem;
+            padding: 0.2rem 0.4rem;
+          }
+        }
+
+        /* Floating Card Responsive */
+        @media (max-width: 640px) {
           .floating-card {
-            max-width: 320px;
+            max-width: 400px;
+          }
+          
+          .floating-card-image {
+            height: 180px;
           }
           
           .floating-card-title {
             font-size: 1.5rem;
           }
+        }
+
+        @media (max-width: 480px) {
+          .floating-card {
+            max-width: 320px;
+          }
           
           .floating-card-image {
             height: 160px;
-          }
-        }
-
-        /* Extra small screens (480px - 640px) */
-        @media (max-width: 480px) {
-          .grid-cell.big {
-            height: 180px;
-          }
-          
-          .grid-cell.small {
-            height: 90px;
-          }
-          
-          .floating-card {
-            max-width: 300px;
           }
           
           .floating-card-title {
             font-size: 1.25rem;
           }
           
-          .floating-card-description {
-            font-size: 0.75rem;
-          }
-          
-          .floating-card-image {
-            height: 140px;
-          }
-        }
-
-        /* Very small screens (below 480px) */
-        @media (max-width: 400px) {
-          .grid-cell.big {
-            height: 160px;
-          }
-          
-          .grid-cell.small {
-            height: 80px;
-          }
-          
-          .floating-card {
-            max-width: 280px;
-            padding: 0;
-          }
-          
           .floating-card-content {
-            padding: 1.5rem;
+            padding: 1.25rem;
           }
         }
       `}</style>
