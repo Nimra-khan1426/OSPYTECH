@@ -1,7 +1,7 @@
 
 .hero-section {
   width: auto;
-  padding-top: 100px ;
+ 
   background-color: #ffffff;
   position: relative;
   overflow: hidden;
@@ -20,7 +20,7 @@
   background-color: #cfe8cf84;
   align-items: center;
   width: auto;
-  margin-top: -100px;
+ 
   min-height: 500px;
   border-bottom-left-radius: 200% 50%;
   border-bottom-right-radius: 0% 0%;
@@ -416,8 +416,7 @@
   }
 
   .hero-container {
-    margin-top: -100;
-    padding-top: 200px;
+   
    
     min-height: auto;
   }
