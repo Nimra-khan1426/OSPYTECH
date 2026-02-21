@@ -149,6 +149,9 @@ export default function PartnerInProgress() {
           line-height: 1.6;
           margin: 0;
           font-weight: 400;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
         }
 
         .divider-line {
@@ -159,7 +162,7 @@ export default function PartnerInProgress() {
           opacity: 0.2;
         }
 
-        /* CENTER - Clean Images Grid */
+        /* CENTER - Clean Images Grid - SAME GRID ON ALL SCREENS */
         .image-column {
           display: flex;
           justify-content: center;
@@ -231,6 +234,7 @@ export default function PartnerInProgress() {
           gap: 12px;
           margin-top: 16px;
           padding: 0 4px;
+          flex-wrap: wrap;
         }
 
         .grid-number {
@@ -238,6 +242,7 @@ export default function PartnerInProgress() {
           font-weight: 500;
           color: #999999;
           min-width: 24px;
+          flex-shrink: 0;
         }
 
         .grid-text {
@@ -245,6 +250,10 @@ export default function PartnerInProgress() {
           color: #000000;
           font-weight: 500;
           line-height: 1.3;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+          flex: 1;
         }
 
         /* RIGHT - Heading */
@@ -275,7 +284,7 @@ export default function PartnerInProgress() {
           line-height: 1.5;
         }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE - ONLY IMAGE SIZES CHANGE, GRID STAYS SAME */
         @media (max-width: 1280px) {
           .layout-grid {
             gap: 60px;
@@ -416,6 +425,7 @@ export default function PartnerInProgress() {
           
           .service-item p {
             font-size: 15px;
+            line-height: 1.5;
           }
           
           .grid-text {
@@ -423,11 +433,11 @@ export default function PartnerInProgress() {
           }
           
           .grid-item:not(.large) .grid-image-wrapper {
-            height: 180px;
+            height: 160px; /* Smaller images */
           }
           
           .grid-item.large .grid-image-wrapper {
-            height: 200px;
+            height: 180px; /* Smaller images */
           }
         }
 
@@ -442,11 +452,11 @@ export default function PartnerInProgress() {
           }
           
           .grid-item:not(.large) .grid-image-wrapper {
-            height: 160px;
+            height: 130px; /* Even smaller */
           }
           
           .grid-item.large .grid-image-wrapper {
-            height: 180px;
+            height: 150px; /* Even smaller */
           }
           
           .main-heading {
@@ -459,16 +469,22 @@ export default function PartnerInProgress() {
           
           .grid-label {
             gap: 8px;
-            margin-top: 12px;
+            margin-top: 10px;
           }
           
           .grid-number {
-            font-size: 13px;
-            min-width: 20px;
+            font-size: 12px;
+            min-width: 18px;
           }
           
           .grid-text {
+            font-size: 13px;
+            line-height: 1.4;
+          }
+          
+          .service-item p {
             font-size: 14px;
+            line-height: 1.5;
           }
         }
 
@@ -478,21 +494,16 @@ export default function PartnerInProgress() {
           }
           
           .images-grid {
-            grid-template-columns: 1fr;
-            max-width: 320px;
-            gap: 20px;
-          }
-          
-          .grid-item.large {
-            grid-column: 1;
+            max-width: 100%;
+            gap: 14px;
           }
           
           .grid-item:not(.large) .grid-image-wrapper {
-            height: 200px;
+            height: 110px; /* Smallest */
           }
           
           .grid-item.large .grid-image-wrapper {
-            height: 200px;
+            height: 130px; /* Smallest */
           }
 
           .main-heading {
@@ -514,6 +525,20 @@ export default function PartnerInProgress() {
           .layout-grid {
             gap: 30px;
           }
+          
+          .grid-label {
+            gap: 6px;
+            margin-top: 8px;
+          }
+          
+          .grid-number {
+            font-size: 11px;
+            min-width: 16px;
+          }
+          
+          .grid-text {
+            font-size: 12px;
+          }
         }
 
         @media (max-width: 360px) {
@@ -522,15 +547,15 @@ export default function PartnerInProgress() {
           }
           
           .images-grid {
-            max-width: 280px;
+            gap: 12px;
           }
           
           .grid-item:not(.large) .grid-image-wrapper {
-            height: 180px;
+            height: 90px; /* Super small */
           }
           
           .grid-item.large .grid-image-wrapper {
-            height: 180px;
+            height: 110px; /* Super small */
           }
           
           .main-heading {
@@ -539,6 +564,14 @@ export default function PartnerInProgress() {
           
           .sub-heading {
             font-size: 15px;
+          }
+          
+          .service-item p {
+            font-size: 13px;
+          }
+          
+          .grid-text {
+            font-size: 11px;
           }
         }
       `}</style>
