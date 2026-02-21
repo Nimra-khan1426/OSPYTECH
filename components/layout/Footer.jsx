@@ -6,8 +6,6 @@ const Footer = () => {
     <footer className="footer-container">
       {/* Animated Background Elements - LEFT SIDE */}
       
-      
-      
       <div className="footer-wrapper">
         {/* Top Section */}
         <div className="footer-top-section">
@@ -25,7 +23,6 @@ const Footer = () => {
             </a>
             {/* Middle - Social Links */}
             <div className="social-section">
-             
               <div className="social-icons">
                 <a href="#" className="social-icon">
                   <FaFacebookF className="icon" />
@@ -42,7 +39,6 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          
 
           {/* Navigation Columns */}
           <div className="nav-column">
@@ -86,16 +82,14 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-       <div className="footer-bottom-section">
-  <div className="bottom-wrapper">
-    <p className="copyright-text">
-      Template by <span className="highlight-text">Nimra Khan</span> &nbsp;|&nbsp; 
-      All CopyRights Reserved by <span className="highlight-text">OspyTech</span> @ 2026
-    </p>
-  </div>
-</div>
-
-         
+        <div className="footer-bottom-section">
+          <div className="bottom-wrapper">
+            <p className="copyright-text">
+              Template by <span className="highlight-text">Nimra Khan</span> &nbsp;|&nbsp; 
+              All CopyRights Reserved by <span className="highlight-text">OspyTech</span> @ 2026
+            </p>
+          </div>
+        </div>
       </div>
 
       <style >{`
@@ -114,7 +108,7 @@ const Footer = () => {
           top: 0;
           right: 0;
           bottom:0;
-          width: 15%; /* Left side cover */
+          width: 15%;
           z-index: 0;
           overflow: hidden;
           pointer-events: none;
@@ -124,7 +118,7 @@ const Footer = () => {
         .rotating-circle {
           position: absolute;
           top: 50%;
-          left: -10%; /* Left side se bahar nikal kar */
+          left: -10%;
           transform: translateY(-50%);
           width: 400px;
           height: 400px;
@@ -135,7 +129,7 @@ const Footer = () => {
           position: absolute;
           width: 100%;
           height: 100%;
-          border: 1px solid rgba(122, 212, 137, 0.03); /* Very light color */
+          border: 1px solid rgba(122, 212, 137, 0.03);
           border-radius: 50%;
           border-top-color: rgba(60, 114, 69, 0.12);
           border-right-color: rgba(67, 129, 77, 0.05);
@@ -284,20 +278,19 @@ const Footer = () => {
         }
         
         .bottom-wrapper {
-            display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center;    /* center vertically if needed */
-  text-align: center;     /* for text inside p */
-  flex-wrap: wrap;
-  gap: 0.25rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          flex-wrap: wrap;
+          gap: 0.25rem;
         }
+        
         .muted {
           color: black;
           font-size: 0.875rem;
+        }
         
-
-  
-}
         .copyright-text {
           color: black;
           font-size: 0.875rem;
@@ -306,7 +299,7 @@ const Footer = () => {
         .highlight-text {
           color: black;
           font-weight: 500;
-          justify-text: center;
+          text-align: center;
         }
         
         .social-section {
@@ -333,7 +326,7 @@ const Footer = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          color:#016712;
+          color: #016712;
           text-decoration: none;
           transition: all 0.2s;
         }
@@ -341,7 +334,7 @@ const Footer = () => {
         .social-icon:hover {
           background: #016712;
           border-color: #016712;
-            color:white;
+          color: white;
         }
         
         .icon {
@@ -369,7 +362,7 @@ const Footer = () => {
         /* Responsive Design */
         @media (max-width: 1024px) {
           .footer-top-section {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
           }
           
@@ -385,6 +378,11 @@ const Footer = () => {
         }
         
         @media (max-width: 768px) {
+          .footer-top-section {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+          }
+          
           .rotating-circle {
             width: 250px;
             height: 250px;
@@ -393,24 +391,93 @@ const Footer = () => {
         }
         
         @media (max-width: 640px) {
+          /* Small screen - 3 columns */
           .footer-top-section {
-            grid-template-columns: 1fr;
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
           }
           
-          .bottom-wrapper {
-            flex-direction: column;
-            text-align: center;
-            gap: 1.5rem;
+          /* Brand section spans 3 columns */
+          .brand-section {
+            grid-column: span 3;
+            text-align: left;
           }
           
-          .social-section {
-            order: -1;
+          /* Adjust spacing for mobile */
+          .footer-container {
+            padding: 2rem 1rem;
           }
           
-          /* Hide animations on mobile for better performance */
+          .nav-column {
+            gap: 0.5rem;
+          }
+          
+          .nav-list {
+            gap: 0.4rem;
+          }
+          
+          .nav-link {
+            font-size: 0.85rem;
+          }
+          
+          .column-title {
+            font-size: 0.95rem;
+          }
+          
+          .social-icons {
+            gap: 0.75rem;
+          }
+          
+          .social-icon {
+            width: 30px;
+            height: 30px;
+          }
+          
+          .copyright-text {
+            font-size: 0.8rem;
+          }
+          
+          /* Hide animations on mobile */
           .animated-background {
             display: none;
+          }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 480px) {
+          .footer-top-section {
+            gap: 0.75rem;
+          }
+          
+          .nav-link {
+            font-size: 0.8rem;
+          }
+          
+          .column-title {
+            font-size: 0.9rem;
+          }
+          
+          .social-icon {
+            width: 28px;
+            height: 28px;
+          }
+          
+          .copyright-text {
+            font-size: 0.7rem;
+          }
+        }
+        
+        @media (max-width: 380px) {
+          .footer-top-section {
+            gap: 0.5rem;
+          }
+          
+          .nav-link {
+            font-size: 0.75rem;
+          }
+          
+          .column-title {
+            font-size: 0.85rem;
           }
         }
       `}</style>
