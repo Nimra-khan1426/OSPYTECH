@@ -48,9 +48,12 @@ export default function ServicesSection1() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   // Fetch data from Sanity
-  useEffect(() => {
-    const fetchData = async () => {
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
       const data = await client.fetch(query);
+      console.log("SANITY DATA:", data);
+
       if (data) {
         setHeader({
           badgeTitle: data.badgeTitle,
@@ -58,11 +61,16 @@ export default function ServicesSection1() {
           headingBold: data.headingBold,
           description: data.description,
         });
+
         setServices(data.services || []);
       }
-    };
-    fetchData();
-  }, []);
+    } catch (error) {
+      console.error("SANITY ERROR:", error);
+    }
+  };
+
+  fetchData();
+}, []);
 
   // Animate once when section comes into view
   useEffect(() => {
