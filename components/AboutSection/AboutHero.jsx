@@ -215,7 +215,7 @@ export default function AboutHero() {
         @media (max-width: 768px) {
           .hero {
             padding: 20px;
-            padding-top: 140px;
+            padding-top: 100px;
           }
 
           .hero-wrap {
