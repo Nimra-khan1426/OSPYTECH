@@ -84,17 +84,10 @@ export default function SimpleWorkflow() {
           <div className="pattern-lines"></div>
           <div className="pattern-dots"></div>
           <div className="gradient-overlay"></div>
-           {/* Decorative Corner Accents */}
-      <div style={{
-        position: "absolute",
-        top: "10%",
-        left: "3%",
-        width: "200px",
-        height: "200px",
-        borderTop: "2px solid rgba(138, 248, 138, 0.33)",
-        borderLeft: "2px solid rgba(66, 254, 14, 0.17)",
-        zIndex: 1,
-      }} />
+          
+          {/* Decorative Corner Accents - FIXED: Added z-index and responsive positioning */}
+          <div className="corner-accent corner-tl"></div>
+          <div className="corner-accent corner-br"></div>
         </div>
 
         {/* 🔹 HEADER ROW */}
@@ -145,16 +138,6 @@ export default function SimpleWorkflow() {
             
           ))}
         </div>
-          <div style={{
-        position: "absolute",
-        bottom: "10%",
-        right: "3%",
-        width: "200px",
-        height: "200px",
-        borderBottom: "2px solid rgba(138, 248, 138, 0.33)",
-        borderRight: "2px solid rgba(205, 249, 205, 0.76)",
-        zIndex: 1,
-      }} />
       </section>
 
       {/* 🔥 CSS */}
@@ -164,15 +147,32 @@ export default function SimpleWorkflow() {
           background: #f8fafc;
           position: relative;
           overflow: hidden;
-          width:auto;
-          max-width:auto;
+          width: auto;
+          max-width: auto;
         }
 
-        /* 🔥 Background Pattern Styles */
-      
-       
+        /* Corner Accents - FIXED: Proper positioning and z-index */
+        .corner-accent {
+          position: absolute;
+          width: 200px;
+          height: 200px;
+          z-index: 2;
+          pointer-events: none;
+        }
 
-     
+        .corner-tl {
+          top: 5%;
+          left: 2%;
+          border-top: 2px solid rgba(138, 248, 138, 0.33);
+          border-left: 2px solid rgba(66, 254, 14, 0.17);
+        }
+
+        .corner-br {
+          bottom: 5%;
+          right: 2%;
+          border-bottom: 2px solid rgba(138, 248, 138, 0.33);
+          border-right: 2px solid rgba(205, 249, 205, 0.76);
+        }
 
         .pattern-dots {
           position: absolute;
@@ -182,6 +182,7 @@ export default function SimpleWorkflow() {
           background-size: 40px 40px;
           background-position: 0 0, 20px 20px;
           opacity: 0.4;
+          z-index: 1;
         }
 
         .gradient-overlay {
@@ -189,6 +190,7 @@ export default function SimpleWorkflow() {
           width: 100%;
           height: 100%;
           background: radial-gradient(circle at 50% 50%, transparent 30%, #f8fafc 70%);
+          z-index: 1;
         }
 
         @keyframes float {
@@ -221,7 +223,7 @@ export default function SimpleWorkflow() {
           align-items: center;
           gap: 0px;
           position: relative;
-          z-index: 1;
+          z-index: 5;
         }
 
         .approach-title {
@@ -233,6 +235,8 @@ export default function SimpleWorkflow() {
           -webkit-text-fill-color: transparent;
           background-clip: text;
           padding-left: 50px;
+          position: relative;
+          z-index: 5;
         }
 
         .approach-subtitle {
@@ -241,7 +245,7 @@ export default function SimpleWorkflow() {
           color: #4b5563;
           line-height: 1.6;
           position: relative;
-          z-index: 1;
+          z-index: 5;
           padding-right: 100px;
         }
 
@@ -261,11 +265,11 @@ export default function SimpleWorkflow() {
           justify-content: space-between;
           gap: 24px;
           position: relative;
-          z-index: 1;
+          z-index: 5;
+          flex-wrap: wrap;
         }
 
         .approach-card {
-         
           backdrop-filter: blur(10px);
           padding: 32px 26px;
           border-radius: 22px;
@@ -276,19 +280,20 @@ export default function SimpleWorkflow() {
           transform: translateY(40px) scale(0.96);
           position: relative;
           overflow: hidden;
+          flex: 1 1 auto;
+          z-index: 5;
+          background: white; /* Added background to prevent transparency issues */
+          border: 1px solid rgba(1, 103, 18, 0.1); /* Subtle border */
         }
-
-      
 
         .approach-card:hover {
           transform: translateY(-5px);
           box-shadow: 
-            0 20px 40px rgba(59, 130, 246, 0.1),
-            0 10px 20px rgba(0, 0, 0, 0.05),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9);
-          background: rgba(255, 255, 255, 0.95);
+            0 20px 40px rgba(1, 103, 18, 0.1),
+            0 10px 20px rgba(0, 0, 0, 0.05);
+          background: white;
+          border-color: #016712;
         }
-
 
         @keyframes cardReveal {
           to {
@@ -338,38 +343,64 @@ export default function SimpleWorkflow() {
           line-height: 1.5;
         }
 
-        /* 📱 MOBILE */
+        /* DESKTOP FIRST APPROACH */
+        @media (max-width: 1100px) {
+          .approach-card-wrap {
+            justify-content: center;
+            gap: 20px;
+          }
+          
+          .approach-card {
+            width: calc(33.33% - 20px);
+            min-width: 220px;
+          }
+          
+          .corner-tl {
+            width: 150px;
+            height: 150px;
+          }
+          
+          .corner-br {
+            width: 150px;
+            height: 150px;
+          }
+        }
+
         @media (max-width: 900px) {
           .approach-header {
             flex-direction: column;
             align-items: flex-start;
             gap: 20px;
+            margin-bottom: 60px;
           }
 
           .approach-title {
-            font-size: 2.4rem;
+            font-size: 3rem;
+            padding-left: 30px;
           }
 
-          .approach-card-wrap {
-            flex-direction: column;
-            align-items: center;
-          }
-
-          .approach-card {
-            width: 100%;
-            max-width: 360px;
-          }
-
-          .pattern-circle-1,
-          .pattern-circle-2,
-          .pattern-circle-3,
-          .pattern-circle-4 {
-            display: none;
+          .approach-subtitle {
+            padding-right: 30px;
+            max-width: 100%;
           }
           
-          .pattern-lines,
-          .pattern-dots {
-            opacity: 0.2;
+          .approach-card-wrap {
+            gap: 20px;
+          }
+          
+          .approach-card {
+            width: calc(50% - 20px);
+            min-width: 240px;
+          }
+          
+          .corner-tl {
+            width: 120px;
+            height: 120px;
+          }
+          
+          .corner-br {
+            width: 120px;
+            height: 120px;
           }
         }
 
@@ -378,8 +409,204 @@ export default function SimpleWorkflow() {
             padding: 60px 20px;
           }
           
+          .approach-title {
+            font-size: 2.5rem;
+            padding-left: 20px;
+          }
+          
+          .approach-subtitle {
+            font-size: 1rem;
+            padding-right: 20px;
+          }
+          
           .pattern-grid {
             background-size: 40px 40px;
+          }
+          
+          .corner-tl {
+            width: 100px;
+            height: 100px;
+            top: 3%;
+            left: 1%;
+          }
+          
+          .corner-br {
+            width: 100px;
+            height: 100px;
+            bottom: 3%;
+            right: 1%;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .approach-header {
+            margin-bottom: 40px;
+          }
+          
+          .approach-title {
+            font-size: 2.2rem;
+            padding-left: 15px;
+          }
+          
+          .approach-subtitle {
+            font-size: 0.95rem;
+            padding-right: 15px;
+          }
+          
+          .approach-card-wrap {
+            gap: 15px;
+          }
+          
+          .approach-card {
+            width: calc(50% - 15px);
+            min-width: 0;
+            padding: 25px 20px;
+          }
+          
+          .sect-dot-flex {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+          }
+          
+          .appr-num {
+            font-size: 1.2rem;
+          }
+          
+          .papproach {
+            font-size: 0.9rem;
+          }
+          
+          .corner-tl {
+            width: 80px;
+            height: 80px;
+            border-width: 1.5px;
+          }
+          
+          .corner-br {
+            width: 80px;
+            height: 80px;
+            border-width: 1.5px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .approach {
+            padding: 50px 15px;
+          }
+          
+          .approach-title {
+            font-size: 2rem;
+            padding-left: 10px;
+          }
+          
+          .approach-subtitle {
+            font-size: 0.9rem;
+            padding-right: 10px;
+          }
+          
+          .approach-card-wrap {
+            gap: 12px;
+          }
+          
+          .approach-card {
+            width: calc(50% - 12px);
+            padding: 20px 15px;
+          }
+          
+          .sect-dot-flex {
+            font-size: 0.9rem;
+            gap: 8px;
+            margin-bottom: 12px;
+          }
+          
+          .dot {
+            width: 8px;
+            height: 8px;
+          }
+          
+          .appr-num {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+          }
+          
+          .appr-line {
+            width: 25px;
+            margin-bottom: 10px;
+          }
+          
+          .papproach {
+            font-size: 0.85rem;
+          }
+          
+          .corner-tl {
+            width: 60px;
+            height: 60px;
+            border-width: 1px;
+          }
+          
+          .corner-br {
+            width: 60px;
+            height: 60px;
+            border-width: 1px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .approach {
+            padding: 40px 10px;
+          }
+          
+          .approach-title {
+            font-size: 1.8rem;
+          }
+          
+          .approach-card-wrap {
+            gap: 10px;
+          }
+          
+          .approach-card {
+            width: calc(50% - 10px);
+            padding: 15px 12px;
+          }
+          
+          .sect-dot-flex {
+            font-size: 0.85rem;
+            gap: 6px;
+          }
+          
+          .appr-num {
+            font-size: 1rem;
+          }
+          
+          .papproach {
+            font-size: 0.8rem;
+          }
+          
+          .corner-tl {
+            width: 50px;
+            height: 50px;
+          }
+          
+          .corner-br {
+            width: 50px;
+            height: 50px;
+          }
+        }
+
+        /* For very small screens, if needed */
+        @media (max-width: 320px) {
+          .approach-card-wrap {
+            flex-direction: column;
+            align-items: center;
+          }
+          
+          .approach-card {
+            width: 100%;
+            max-width: 280px;
+          }
+          
+          .corner-tl, .corner-br {
+            display: none; /* Hide corners on extremely small screens */
           }
         }
       `}</style>

@@ -16,7 +16,7 @@ export default function OurWorks() {
 
   const projects = [
     {
-      title: "InnrevAI",
+      title: "InrevAI",
       year: "2024",
       img: "https://cdn.prod.website-files.com/673a535e55337a9ba48cdebb/67570dedcc1f224d4dc4102d_Frame%201707479710.avif",
       link: "/projects/web-design/innrevai",

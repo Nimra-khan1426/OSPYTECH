@@ -643,7 +643,7 @@ export default function ExpertCardsSection() {
           background: #f8fafc;
           text-align: center;
           min-height: 100vh;
-           width:auto;
+          width: auto;
         }
 
         .expert-section-title {
@@ -656,8 +656,6 @@ export default function ExpertCardsSection() {
           display: inline-block;
         }
 
-      
-
         .expert-cards-wrap {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -665,19 +663,6 @@ export default function ExpertCardsSection() {
           max-width: 1400px;
           margin: 0 auto;
           padding: 0 20px;
-        }
-
-        @media (max-width: 1200px) {
-          .expert-cards-wrap {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        @media (max-width: 768px) {
-          .expert-cards-wrap {
-            grid-template-columns: 1fr;
-            max-width: 400px;
-          }
         }
 
         .expert-card {
@@ -693,7 +678,7 @@ export default function ExpertCardsSection() {
           opacity: 1 !important;
           transform: translateY(0) scale(1) !important;
           visibility: visible !important;
-          width: 280px;
+          width: 100%;
         }
 
         .card-background-container {
@@ -877,8 +862,8 @@ export default function ExpertCardsSection() {
           position: absolute;
           top: 0;
           left: 0;
-          width: 390px;
-          height: 430px;
+          width: 100%;
+          height: 100%;
           object-fit: cover;
           opacity: 1 !important;
           transform: scale(1) !important;
@@ -939,7 +924,12 @@ export default function ExpertCardsSection() {
           color: #ffffff;
         }
 
+        /* Responsive Design */
         @media (max-width: 1200px) {
+          .expert-cards-wrap {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          
           .expert-card {
             height: 380px;
           }
@@ -976,12 +966,17 @@ export default function ExpertCardsSection() {
 
         @media (max-width: 768px) {
           .expert-cards-section {
-            padding: 80px 20px;
+            padding: 60px 20px;
           }
 
           .expert-section-title {
             font-size: 2.5rem;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
+          }
+
+          .expert-cards-wrap {
+            grid-template-columns: 1fr;
+            max-width: 500px;
           }
 
           .expert-card {
@@ -993,12 +988,11 @@ export default function ExpertCardsSection() {
           }
 
           .expert-card-number {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
           }
 
           .expert-card-text {
-            font-size: 1.05rem;
-            max-width: 95%;
+            font-size: 0.95rem;
           }
 
           .circles-container {
@@ -1032,9 +1026,13 @@ export default function ExpertCardsSection() {
         }
 
         @media (max-width: 480px) {
-          .expert-cards-wrap {
-            padding: 0 10px;
-            gap: 20px;
+          .expert-cards-section {
+            padding: 40px 15px;
+          }
+
+          .expert-section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
           }
 
           .expert-card {
@@ -1046,11 +1044,11 @@ export default function ExpertCardsSection() {
           }
 
           .expert-card-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
           }
 
           .expert-card-text {
-            font-size: 1rem;
+            font-size: 0.9rem;
           }
 
           .circles-container {

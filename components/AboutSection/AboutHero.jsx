@@ -80,7 +80,7 @@ export default function AboutHero() {
           background: #fff;
           border-radius: 28px;
           padding: 40px;
-          margin-top: -30px;
+        
         }
 
         .hero-content {
