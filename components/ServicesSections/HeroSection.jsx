@@ -18,11 +18,6 @@ export default function HeroSection() {
 
   const handleLearnMore = () => {
     router.push("/about");
-    // Or scroll to section if exists on same page
-    // const featuresSection = document.getElementById('features');
-    // if (featuresSection) {
-    //   featuresSection.scrollIntoView({ behavior: 'smooth' });
-    // }
   };
 
   return (
@@ -71,14 +66,14 @@ export default function HeroSection() {
         <div className="bg-element bg-element-1" />
         <div className="bg-element bg-element-2" />
 
-        {/* CENTERED CONTENT - NO ANIMATION */}
+        {/* CENTERED CONTENT */}
         <div className="left-content">
           {/* Subheading */}
           <p className="subheading">
             OspyTech Services
           </p>
 
-          {/* Main Heading - Center Aligned */}
+          {/* Main Heading */}
           <h1 className="main-heading">
             <div className="heading-line">
               Comprehensive,
@@ -91,14 +86,14 @@ export default function HeroSection() {
             </div>
           </h1>
 
-          {/* Description - Center Aligned */}
+          {/* Description */}
           <p className="description">
             We provide end-to-end technology services that transform your business 
             operations through innovative solutions, cutting-edge tools, and 
             strategic implementation.
           </p>
 
-          {/* CTA Buttons - Center Aligned */}
+          {/* CTA Buttons */}
           <div className="buttons-container">
             <button 
               className="button-primary-sm"
