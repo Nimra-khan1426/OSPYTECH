@@ -302,7 +302,7 @@ export default function PartnerInProgress() {
 
           .heading-column {
             grid-column: 1 / span 2;
-            grid-row: 1; /* Heading ko row 1 pe rakha */
+            grid-row: 1;
             justify-content: center;
             text-align: center;
             margin-bottom: 40px;
@@ -317,7 +317,8 @@ export default function PartnerInProgress() {
           .image-column {
             grid-column: 2;
             grid-row: 2;
-            justify-content: flex-start;
+            justify-content: center;
+            padding: 0;
           }
           
           .services-container {
@@ -326,6 +327,7 @@ export default function PartnerInProgress() {
           
           .images-grid {
             max-width: 100%;
+            margin: 0;
           }
           
           .grid-item:not(.large) .grid-image-wrapper {
@@ -353,8 +355,9 @@ export default function PartnerInProgress() {
 
           .heading-column {
             grid-column: 1;
-            grid-row: 1; /* Heading sabse upar */
+            grid-row: 1;
             margin-bottom: 20px;
+            text-align: center;
           }
 
           .services-column {
@@ -368,6 +371,7 @@ export default function PartnerInProgress() {
             grid-column: 1;
             grid-row: 3;
             justify-content: center;
+            padding: 0;
           }
           
           .divider-line {
@@ -387,15 +391,19 @@ export default function PartnerInProgress() {
           .grid-item.large .grid-image-wrapper {
             height: 220px;
           }
+          
+          .heading-content {
+            max-width: 100%;
+          }
         }
 
         @media (max-width: 768px) {
           .partner-section {
-            padding: 80px 24px;
+            padding: 60px 20px;
           }
           
           .images-grid {
-            gap: 24px;
+            gap: 20px;
           }
 
           .main-heading {
@@ -404,6 +412,10 @@ export default function PartnerInProgress() {
 
           .service-item h3 {
             font-size: 24px;
+          }
+          
+          .service-item p {
+            font-size: 15px;
           }
           
           .grid-text {
@@ -419,9 +431,14 @@ export default function PartnerInProgress() {
           }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
+          .partner-section {
+            padding: 50px 16px;
+          }
+          
           .images-grid {
-            max-width: 400px;
+            max-width: 100%;
+            gap: 16px;
           }
           
           .grid-item:not(.large) .grid-image-wrapper {
@@ -439,16 +456,30 @@ export default function PartnerInProgress() {
           .sub-heading {
             font-size: 17px;
           }
+          
+          .grid-label {
+            gap: 8px;
+            margin-top: 12px;
+          }
+          
+          .grid-number {
+            font-size: 13px;
+            min-width: 20px;
+          }
+          
+          .grid-text {
+            font-size: 14px;
+          }
         }
 
         @media (max-width: 480px) {
           .partner-section {
-            padding: 60px 20px;
+            padding: 40px 12px;
           }
           
           .images-grid {
             grid-template-columns: 1fr;
-            max-width: 300px;
+            max-width: 320px;
             gap: 20px;
           }
           
@@ -457,11 +488,11 @@ export default function PartnerInProgress() {
           }
           
           .grid-item:not(.large) .grid-image-wrapper {
-            height: 180px;
+            height: 200px;
           }
           
           .grid-item.large .grid-image-wrapper {
-            height: 180px;
+            height: 200px;
           }
 
           .main-heading {
@@ -477,11 +508,37 @@ export default function PartnerInProgress() {
           }
           
           .service-item p {
-            font-size: 15px;
+            font-size: 14px;
           }
           
           .layout-grid {
-            gap: 40px;
+            gap: 30px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .partner-section {
+            padding: 30px 10px;
+          }
+          
+          .images-grid {
+            max-width: 280px;
+          }
+          
+          .grid-item:not(.large) .grid-image-wrapper {
+            height: 180px;
+          }
+          
+          .grid-item.large .grid-image-wrapper {
+            height: 180px;
+          }
+          
+          .main-heading {
+            font-size: 30px;
+          }
+          
+          .sub-heading {
+            font-size: 15px;
           }
         }
       `}</style>

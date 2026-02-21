@@ -371,6 +371,7 @@
   .hero-container {
     padding: 25px 15px;
     min-height: 380px;
+    padding-top: 100px;
       
   }
   
@@ -435,7 +436,7 @@
 @media (max-width: 480px) {
   .hero-section {
     padding: 30px 15px;
-     
+      padding-top: 100px;
     
   }
   
@@ -526,7 +527,7 @@
   .hero-container {
     padding: 15px 10px;
     min-height: 320px;
-    
+     padding-top: 100px;
   }
   
   .main-heading {
