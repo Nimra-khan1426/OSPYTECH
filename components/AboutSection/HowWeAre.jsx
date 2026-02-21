@@ -170,8 +170,9 @@ export default function AboutUsSection() {
         }
         
         .green {
-  color: #016712;
-}
+          color: #016712;
+        }
+        
         .about-header {
           margin-bottom: 40px;
         }
@@ -248,7 +249,7 @@ export default function AboutUsSection() {
           display: block;
         }
 
-        /* Small Stats Row */
+        /* Small Stats Row - Horizontal by default */
         .stats-row {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -283,8 +284,8 @@ export default function AboutUsSection() {
           font-weight: 400;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1100px) {
           .about-grid {
             gap: 60px;
           }
@@ -292,9 +293,15 @@ export default function AboutUsSection() {
           .about-title {
             font-size: 42px;
           }
+        }
+
+        @media (max-width: 1000px) {
+          .about-title {
+            font-size: 40px;
+          }
           
-          .about-image {
-            height: 280px;
+          .about-description {
+            font-size: 17px;
           }
           
           .stat-number {
@@ -305,7 +312,7 @@ export default function AboutUsSection() {
         @media (max-width: 900px) {
           .about-grid {
             grid-template-columns: 1fr;
-            gap: 60px;
+            gap: 50px;
           }
           
           .content-wrapper {
@@ -319,16 +326,17 @@ export default function AboutUsSection() {
           .about-visual {
             max-width: 600px;
             margin: 0 auto;
+            width: 100%;
           }
           
           .about-image {
-            height: 250px;
+            height: 280px;
           }
         }
 
         @media (max-width: 768px) {
           .about-section {
-            padding: 80px 24px;
+            padding: 70px 30px;
           }
           
           .about-title {
@@ -341,7 +349,7 @@ export default function AboutUsSection() {
           }
           
           .about-image {
-            height: 220px;
+            height: 250px;
           }
           
           .stats-row {
@@ -349,7 +357,7 @@ export default function AboutUsSection() {
           }
           
           .stat-number {
-            font-size: 24px;
+            font-size: 26px;
           }
           
           .stat-label {
@@ -357,39 +365,69 @@ export default function AboutUsSection() {
           }
           
           .learn-more-btn {
-            padding: 14px 32px;
+            padding: 14px 35px;
           }
         }
 
         @media (max-width: 640px) {
-          .stats-row {
-            grid-template-columns: 1fr;
-            gap: 25px;
+          .about-section {
+            padding: 60px 25px;
           }
           
-          .stat-item {
-            flex-direction: row;
-            align-items: center;
+          .about-title {
+            font-size: 32px;
+          }
+          
+          .about-image {
+            height: 220px;
+          }
+          
+          /* Stats remain horizontal on small screens */
+          .stats-row {
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
           }
           
+          .stat-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+          }
+          
+          .stat-number {
+            font-size: 24px;
+            min-width: auto;
+          }
+          
           .stat-divider {
-            width: 1px;
-            height: 24px;
+            width: 30px;
+            height: 1px;
           }
           
           .stat-label {
-            margin-left: 10px;
+            font-size: 12px;
+            margin-left: 0;
+            line-height: 1.3;
           }
         }
 
         @media (max-width: 480px) {
           .about-section {
-            padding: 60px 20px;
+            padding: 50px 20px;
           }
           
           .about-title {
-            font-size: 32px;
+            font-size: 28px;
+          }
+          
+          .about-badge {
+            font-size: 13px;
+            margin-bottom: 15px;
+          }
+          
+          .about-description {
+            font-size: 15px;
+            margin-bottom: 30px;
           }
           
           .about-image {
@@ -399,6 +437,60 @@ export default function AboutUsSection() {
           .learn-more-btn {
             width: 100%;
             text-align: center;
+            padding: 14px 20px;
+            font-size: 15px;
+          }
+          
+          /* Stats remain horizontal */
+          .stats-row {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+          }
+          
+          .stat-number {
+            font-size: 20px;
+          }
+          
+          .stat-divider {
+            width: 25px;
+          }
+          
+          .stat-label {
+            font-size: 11px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .about-section {
+            padding: 40px 15px;
+          }
+          
+          .about-title {
+            font-size: 24px;
+          }
+          
+          .about-description {
+            font-size: 14px;
+          }
+          
+          .about-image {
+            height: 180px;
+          }
+          
+          .stats-row {
+            gap: 8px;
+          }
+          
+          .stat-number {
+            font-size: 18px;
+          }
+          
+          .stat-divider {
+            width: 20px;
+          }
+          
+          .stat-label {
+            font-size: 10px;
           }
         }
       `}</style>

@@ -9,6 +9,18 @@ export default function PartnerInProgress() {
     <section className="partner-section" ref={sectionRef}>
       <div className="container">
         <div className="layout-grid">
+          {/* RIGHT - Heading - Will move to top on mobile */}
+          <div className="heading-column">
+            <div className="heading-content">
+              <h1 className="main-heading">
+                Your Partner <br />in <span className="green">Progress</span>
+              </h1>
+              <p className="sub-heading">
+                Driving <span className="green">Technology</span> innovation for business growth
+              </p>
+            </div>
+          </div>
+
           {/* LEFT - Services */}
           <div className="services-column">
             <div className="services-container">
@@ -77,18 +89,6 @@ export default function PartnerInProgress() {
                   <span className="grid-text">Cloud Infrastructure</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* RIGHT - Heading */}
-          <div className="heading-column">
-            <div className="heading-content">
-              <h1 className="main-heading">
-                Your Partner <br />in <span className="green">Progress</span>
-              </h1>
-              <p className="sub-heading">
-                Driving <span className="green">Technology</span> innovation for business growth
-              </p>
             </div>
           </div>
         </div>
@@ -300,22 +300,24 @@ export default function PartnerInProgress() {
             gap: 60px;
           }
 
+          .heading-column {
+            grid-column: 1 / span 2;
+            grid-row: 1; /* Heading ko row 1 pe rakha */
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 40px;
+          }
+
           .services-column {
             grid-column: 1;
+            grid-row: 2;
             justify-content: flex-start;
           }
 
           .image-column {
             grid-column: 2;
-            justify-content: flex-start;
-          }
-
-          .heading-column {
-            grid-column: 1 / span 2;
             grid-row: 2;
-            justify-content: center;
-            text-align: center;
-            margin-top: 60px;
+            justify-content: flex-start;
           }
           
           .services-container {
@@ -346,24 +348,26 @@ export default function PartnerInProgress() {
         @media (max-width: 900px) {
           .layout-grid {
             grid-template-columns: 1fr;
-            gap: 60px;
+            gap: 50px;
+          }
+
+          .heading-column {
+            grid-column: 1;
+            grid-row: 1; /* Heading sabse upar */
+            margin-bottom: 20px;
           }
 
           .services-column {
             grid-column: 1;
+            grid-row: 2;
             justify-content: center;
             text-align: center;
           }
 
           .image-column {
             grid-column: 1;
-            justify-content: center;
-          }
-
-          .heading-column {
-            grid-column: 1;
             grid-row: 3;
-            margin-top: 40px;
+            justify-content: center;
           }
           
           .divider-line {

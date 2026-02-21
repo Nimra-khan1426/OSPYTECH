@@ -12,16 +12,14 @@ export default function AboutHero() {
         {/* HERO CONTENT */}
         <div className="hero-content">
           <div className="nav-column">
-  <h3 className="column-title">
-    <span className="badge">About Us</span>
-  </h3>
-  </div>
-<h1>
-  Driving business growth <br />
-  through <span className="green">modern technology</span>
-</h1>
-
-
+            <h3 className="column-title">
+              <span className="badge">About Us</span>
+            </h3>
+          </div>
+          <h1>
+            Driving business growth <br />
+            through <span className="green">modern technology</span>
+          </h1>
 
           <p>
             We design and engineer high-performance digital products using
@@ -73,19 +71,18 @@ export default function AboutHero() {
         .hero {
           background: #cfe8cf84;
           padding: 40px;
-         
+          padding-top:80px;
         }
 
         .hero-wrap {
           background: #fff;
           border-radius: 28px;
           padding: 40px;
-        
         }
 
         .hero-content {
           max-width: 720px;
-          margin: 80px auto 60px;
+          margin: 30px auto 60px;
           text-align: center;
         }
 
@@ -95,17 +92,17 @@ export default function AboutHero() {
           margin-bottom: 20px;
           font-weight:600;
         }
-          .badge {
-  display: inline-block;
- 
-  font-size: 16px;
-  font-weight: 600;
-  color: #016712;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
-}
+        
+        .badge {
+          display: inline-block;
+          font-size: 16px;
+          font-weight: 600;
+          color: #016712;
+          margin-bottom: 20px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          text-align: center;
+        }
 
         .green {
           color:#016712;
@@ -202,13 +199,103 @@ export default function AboutHero() {
           border-radius: 22px;
         }
 
-        @media (max-width: 1024px) {
+        /* Desktop - 5 cards */
+        @media (min-width: 769px) {
+          .cards {
+            grid-template-columns: repeat(5, 1fr);
+          }
+          
+          /* Show all cards on desktop */
+          .card {
+            display: block;
+          }
+        }
+
+        /* Mobile - 2 cards only */
+        @media (max-width: 768px) {
+          .hero {
+            padding: 20px;
+            padding-top: 100px;
+          }
+
+          .hero-wrap {
+            padding: 25px;
+          }
+
           h1 {
-            font-size: 42px;
+            font-size: 36px;
+          }
+
+          p {
+            font-size: 16px;
+          }
+
+          .badge {
+            font-size: 14px;
           }
 
           .cards {
             grid-template-columns: 1fr 1fr;
+            gap: 15px;
+          }
+
+          /* Hide all cards except green-card and profile on mobile */
+          .card:not(.green-card):not(.profile) {
+            display: none;
+          }
+
+          .green-card {
+            grid-column: span 1;
+            height: 160px;
+          }
+
+          .green-card h3 {
+            font-size: 18px;
+          }
+
+          .green-card p {
+            font-size: 14px;
+          }
+
+          .profile {
+            grid-column: span 1;
+            height: 160px;
+          }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+          .hero {
+            padding: 15px;
+            padding-top: 50px;
+          }
+
+          .hero-wrap {
+            padding: 20px;
+          }
+
+          h1 {
+            font-size: 28px;
+          }
+
+          p {
+            font-size: 14px;
+          }
+
+          .cards {
+            gap: 12px;
+          }
+
+          .green-card {
+            height: 140px;
+          }
+
+          .green-card h3 {
+            font-size: 16px;
+          }
+
+          .profile {
+            height: 140px;
           }
         }
       `}</style>

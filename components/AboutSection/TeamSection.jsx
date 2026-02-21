@@ -71,15 +71,16 @@ export default function TeamSection() {
         </div>
       </div>
 
-      {/* CSS remains the same */}
       <style jsx>{`
         .team-section {
           padding: 100px 20px;
           background: #f7f7f7;
         }
-         .green {
-          color:#016712;
+        
+        .green {
+          color: #016712;
         }
+        
         .container {
           max-width: 1200px;
           margin: auto;
@@ -137,6 +138,8 @@ export default function TeamSection() {
           border-radius: 24px;
           overflow: hidden;
           transition: transform 0.3s, box-shadow 0.3s;
+          display: flex;
+          flex-direction: column;
         }
 
         .team-card:hover {
@@ -194,6 +197,7 @@ export default function TeamSection() {
           color: #0077b5;
           text-decoration: none;
           transition: all 0.3s;
+          flex-shrink: 0;
         }
 
         .linkedin-btn:hover {
@@ -209,9 +213,23 @@ export default function TeamSection() {
         }
 
         /* RESPONSIVE */
-        @media (max-width: 1100px) {
+        @media (max-width: 1200px) {
           .cards-column {
             gap: 20px;
+          }
+          
+          .image-wrap {
+            height: 260px;
+          }
+        }
+
+        @media (max-width: 1024px) {
+          .heading {
+            font-size: 48px;
+          }
+          
+          .image-wrap {
+            height: 240px;
           }
         }
 
@@ -226,14 +244,22 @@ export default function TeamSection() {
             width: 100%;
           }
 
+          .text-column {
+            text-align: center;
+          }
+
+          .description {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          /* Last card on tablet */
           .team-card:nth-child(3) {
             grid-column: 1 / -1;
             max-width: 400px;
             margin: 0 auto;
-          }
-
-          .heading {
-            font-size: 48px;
+            width: 100%;
           }
         }
 
@@ -254,11 +280,28 @@ export default function TeamSection() {
             grid-template-columns: 1fr;
             max-width: 400px;
             margin: 0 auto;
+            gap: 25px;
           }
 
+          /* Last card on mobile - full width */
           .team-card:nth-child(3) {
             grid-column: 1;
             max-width: 100%;
+            margin: 0;
+          }
+
+          .image-wrap {
+            height: 280px;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .image-wrap {
+            height: 260px;
+          }
+          
+          .card-footer {
+            padding: 18px 20px;
           }
         }
 
@@ -275,9 +318,57 @@ export default function TeamSection() {
             padding: 16px 20px;
           }
 
+          .card-footer h3 {
+            font-size: 17px;
+          }
+
+          .card-footer p {
+            font-size: 13px;
+          }
+
           .linkedin-btn {
             width: 36px;
             height: 36px;
+          }
+          
+          .cards-column {
+            gap: 20px;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .heading {
+            font-size: 32px;
+          }
+
+          .description {
+            font-size: 15px;
+          }
+
+          .image-wrap {
+            height: 220px;
+          }
+
+          .card-footer {
+            padding: 14px 16px;
+          }
+
+          .card-footer h3 {
+            font-size: 16px;
+          }
+
+          .card-footer p {
+            font-size: 12px;
+          }
+
+          .linkedin-btn {
+            width: 32px;
+            height: 32px;
+          }
+          
+          .linkedin-btn svg {
+            width: 14px;
+            height: 14px;
           }
         }
       `}</style>

@@ -85,7 +85,7 @@ export default function FeaturesSection() {
   return (
     <>
       <section className="features" ref={sectionRef} id="excellence">
-        {/* 🔹 HEADER ROW - FIXED GAP */}
+        {/* 🔹 HEADER ROW */}
         <div className="features-header">
           <div className="header-left">
             <h2 
@@ -103,67 +103,41 @@ export default function FeaturesSection() {
               ref={headerSubtitleRef}
               style={{ opacity: 0, transform: "translateY(30px)" }}
             >
-              Cutting-edge technology stack with enterprise-grade security, AI-powered <br></br>automation, 
-              and scalable architecture designed for high-performance<br></br> digital transformation.
+              Cutting-edge technology stack with enterprise-grade security, AI-powered automation, 
+              and scalable architecture designed for high-performance digital transformation.
             </p>
           </div>
         </div>
 
-        {/* 🔹 FEATURES IN 2 ROWS */}
-        <div className="features-container">
-          {/* Row 1 */}
-          <div className="features-row">
-            {features.slice(0, 3).map((feature, i) => (
-              <div
-                className="feature-item"
-                key={i}
-                ref={(el) => (featureRefs.current[i] = el)}
-                style={{ 
-                  opacity: 0,
-                  transform: "translateY(20px)"
-                }}
-              >
-                <div className="feature-icon-wrapper">
-                  {feature.icon}
-                </div>
-                <div className="feature-content">
-                  <h3 className="feature-title-text">{feature.title}</h3>
-                  <p className="feature-desc">{feature.desc}</p>
-                </div>
+        {/* 🔹 FEATURES GRID - CHANGED TO SINGLE GRID */}
+        <div className="features-grid">
+          {features.map((feature, index) => (
+            <div
+              className="feature-item"
+              key={index}
+              ref={(el) => (featureRefs.current[index] = el)}
+              style={{ 
+                opacity: 0,
+                transform: "translateY(20px)"
+              }}
+            >
+              <div className="feature-icon-wrapper">
+                {feature.icon}
               </div>
-            ))}
-          </div>
-
-          {/* Row 2 */}
-          <div className="features-row">
-            {features.slice(3, 6).map((feature, i) => (
-              <div
-                className="feature-item"
-                key={i + 3}
-                ref={(el) => (featureRefs.current[i + 3] = el)}
-                style={{ 
-                  opacity: 0,
-                  transform: "translateY(20px)"
-                }}
-              >
-                <div className="feature-icon-wrapper">
-                  {feature.icon}
-                </div>
-                <div className="feature-content">
-                  <h3 className="feature-title-text">{feature.title}</h3>
-                  <p className="feature-desc">{feature.desc}</p>
-                </div>
+              <div className="feature-content">
+                <h3 className="feature-title-text">{feature.title}</h3>
+                <p className="feature-desc">{feature.desc}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
       <style jsx>{`
         .features {
           padding: 80px 20px;
-          padding-left:100px;
-            padding-right:100px;
+          padding-left: 100px;
+          padding-right: 100px;
           background: #ffffff;
           position: relative;
           overflow: hidden;
@@ -171,7 +145,7 @@ export default function FeaturesSection() {
           margin: 0 auto;
         }
 
-        /* 🔹 HEADER - FIXED LAYOUT */
+        /* 🔹 HEADER LAYOUT */
         .features-header {
           max-width: 1200px;
           margin: 0 auto 60px;
@@ -189,7 +163,7 @@ export default function FeaturesSection() {
         .header-right {
           flex: 0 0 60%;
           padding-left: 30px;
-          margin-top: 8px; /* Small adjustment for alignment */
+          margin-top: 8px;
         }
 
         .features-title {
@@ -215,28 +189,23 @@ export default function FeaturesSection() {
           }
         }
 
-        /* 🔹 FEATURES CONTAINER */
-        .features-container {
+        /* 🔹 FEATURES GRID - SINGLE GRID FOR ALL ITEMS */
+        .features-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 40px;
           max-width: 1200px;
           margin: 0 auto;
-          position: relative;
-        }
-
-        .features-row {
-          display: flex;
-          justify-content: space-between;
-          gap: 40px;
-          margin-bottom: 40px;
         }
 
         /* 🔹 FEATURE ITEMS */
         .feature-item {
-          flex: 1;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           opacity: 0;
           transform: translateY(20px);
+          height: 100%;
         }
 
         @keyframes featureReveal {
@@ -255,6 +224,7 @@ export default function FeaturesSection() {
           align-items: center;
           justify-content: center;
           margin-bottom: 20px;
+          flex-shrink: 0;
         }
 
         .feature-icon-wrapper :global(.icon) {
@@ -265,6 +235,7 @@ export default function FeaturesSection() {
 
         .feature-content {
           flex: 1;
+          width: 100%;
         }
 
         .feature-title-text {
@@ -284,6 +255,11 @@ export default function FeaturesSection() {
 
         /* 📱 RESPONSIVE */
         @media (max-width: 1100px) {
+          .features {
+            padding-left: 60px;
+            padding-right: 60px;
+          }
+          
           .features-header {
             gap: 30px;
           }
@@ -292,6 +268,10 @@ export default function FeaturesSection() {
           .header-right {
             padding-left: 0;
             padding-right: 0;
+          }
+          
+          .features-grid {
+            gap: 30px;
           }
         }
 
@@ -314,21 +294,19 @@ export default function FeaturesSection() {
 
           .features-subtitle {
             font-size: 1.05rem;
+            text-align: left;
           }
 
-          .features-row {
-            flex-direction: column;
+          /* 2 columns on small screens */
+          .features-grid {
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
-          }
-
-          .feature-item {
-            width: 100%;
           }
         }
 
         @media (max-width: 768px) {
           .features {
-            padding: 60px 20px;
+            padding: 60px 30px;
           }
           
           .features-title {
@@ -356,11 +334,29 @@ export default function FeaturesSection() {
           .feature-desc {
             font-size: 0.9rem;
           }
+          
+          .features-grid {
+            gap: 25px;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .features {
+            padding: 50px 20px;
+          }
+          
+          .features-title {
+            font-size: 2rem;
+          }
+          
+          .features-grid {
+            gap: 20px;
+          }
         }
 
         @media (max-width: 480px) {
           .features-title {
-            font-size: 1.9rem;
+            font-size: 1.8rem;
           }
           
           .features-subtitle {
@@ -378,19 +374,54 @@ export default function FeaturesSection() {
             height: 20px;
           }
           
-          .features-row {
-            gap: 25px;
-            margin-bottom: 25px;
+          .feature-title-text {
+            font-size: 1rem;
+            margin-bottom: 8px;
+          }
+          
+          .feature-desc {
+            font-size: 0.85rem;
+          }
+          
+          .features-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
           }
         }
 
         @media (max-width: 380px) {
           .features {
-            padding: 50px 15px;
+            padding: 40px 15px;
           }
           
           .features-title {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
+          }
+          
+          .features-subtitle {
+            font-size: 0.9rem;
+          }
+          
+          .feature-icon-wrapper {
+            width: 36px;
+            height: 36px;
+          }
+          
+          .feature-icon-wrapper :global(.icon) {
+            width: 18px;
+            height: 18px;
+          }
+          
+          .feature-title-text {
+            font-size: 0.95rem;
+          }
+          
+          .feature-desc {
+            font-size: 0.8rem;
+          }
+          
+          .features-grid {
+            gap: 12px;
           }
         }
       `}</style>
