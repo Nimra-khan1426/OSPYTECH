@@ -58,7 +58,7 @@ export default function ServicesSection1() {
           headingBold: data.headingBold,
           description: data.description,
         });
-        setServices(data.services);
+        setServices(data.services || []);
       }
     };
     fetchData();
@@ -204,7 +204,7 @@ export default function ServicesSection1() {
 
                       {/* Features */}
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "20px" }}>
-                        {service.features.map((f: string, i: number) => (
+                      {service.features?.map((f: string, i: number) => (
                           <motion.span key={i} style={{ padding: "4px 10px", background: "rgba(249,250,251,0.8)", backdropFilter: "blur(8px)", color: "#374151", fontSize: "11px", fontWeight: 600, borderRadius: "6px", border: "1px solid rgba(229,231,235,0.6)" }} whileHover={{ scale: 1.05, background: gradient, color: "white", borderColor: "transparent" }} transition={{ duration: 0.2 }}>
                             {f}
                           </motion.span>
