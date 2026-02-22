@@ -27,6 +27,7 @@ function AuthPageContent() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const [notification, setNotification] = useState({
     show: false,
     message: '',
@@ -57,6 +58,16 @@ function AuthPageContent() {
     setIsLogin(tab !== 'signup');
   }, [searchParams]);
 
+  // Add window resize listener
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const showNotification = (message, type = 'success') => {
     setNotification({ show: true, message, type });
     setTimeout(() => setNotification(prev => ({ ...prev, show: false })), 3000);
@@ -66,6 +77,63 @@ function AuthPageContent() {
     setIsLogin(tab === 'login');
     setShowForgotPassword(false);
     router.replace(`/auth?tab=${tab}`);
+  };
+
+  // Calculate translateX based on screen size
+  const getTranslateX = () => {
+    if (windowWidth < 480) {
+      return isLogin ? 'translateX(-30px)' : 'translateX(30px)';
+    } else if (windowWidth < 640) {
+      return isLogin ? 'translateX(-50px)' : 'translateX(50px)';
+    } else if (windowWidth < 768) {
+      return isLogin ? 'translateX(-70px)' : 'translateX(70px)';
+    } else {
+      return isLogin ? 'translateX(-110px)' : 'translateX(110px)';
+    }
+  };
+
+  // Calculate half-circle position and size based on screen size
+  const getHalfCircleStyle = () => {
+    const baseStyle = {
+      position: 'absolute',
+      borderRadius: '50%',
+      background: '#cfe8cf9b',
+      transition: 'all 1s cubic-bezier(0.4,0,0.2,1)',
+      zIndex: 1,
+      pointerEvents: 'none',
+    };
+
+    if (windowWidth < 480) {
+      return {
+        ...baseStyle,
+        width: '350px',
+        height: '350px',
+        ...(isLogin 
+          ? { top: '50%', right: '-45%' }
+          : { top: '-45%', right: '50%' }
+        )
+      };
+    } else if (windowWidth < 640) {
+      return {
+        ...baseStyle,
+        width: '450px',
+        height: '450px',
+        ...(isLogin 
+          ? { top: '52%', right: '-40%' }
+          : { top: '-42%', right: '52%' }
+        )
+      };
+    } else {
+      return {
+        ...baseStyle,
+        width: '600px',
+        height: '600px',
+        ...(isLogin 
+          ? { top: '55%', right: '-35%' }
+          : { top: '-40%', right: '55%' }
+        )
+      };
+    }
   };
 
   // Input handlers
@@ -194,22 +262,32 @@ await updateProfile(user, { displayName: signupData.fullName });
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', paddingTop: '80px', background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)' }}>
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      padding: windowWidth < 480 ? '10px' : '20px', 
+      paddingTop: windowWidth < 480 ? '60px' : '80px', 
+      background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)'
+    }}>
       {/* Custom Notification */}
       {notification.show && (
         <div style={{
           position: 'fixed',
           top: '20px',
-          right: '20px',
+          right: windowWidth < 480 ? '10px' : '20px',
+          left: windowWidth < 480 ? '10px' : 'auto',
           zIndex: 1000,
-          padding: '12px 20px',
+          padding: windowWidth < 480 ? '10px 15px' : '12px 20px',
           borderRadius: '8px',
           background: notification.type === 'success' ? '#10b981' : '#ef4444',
           color: 'white',
           fontWeight: '500',
           boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
           animation: 'slideIn 0.3s ease-out',
-          maxWidth: '350px'
+          maxWidth: windowWidth < 480 ? 'calc(100% - 20px)' : '350px',
+          width: windowWidth < 480 ? 'auto' : 'auto'
         }}>
           {notification.message}
           <button
@@ -220,7 +298,8 @@ await updateProfile(user, { displayName: signupData.fullName });
               border: 'none',
               color: 'white',
               cursor: 'pointer',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              float: 'right'
             }}
           >
             ×
@@ -240,38 +319,26 @@ await updateProfile(user, { displayName: signupData.fullName });
         </div>
       )}
       
-      {/* Main Container - SMALLER CARD WITH HALF-CIRCLE INSIDE */}
+      {/* Main Container */}
       <div style={{
         width: '100%',
-        maxWidth: '600px',
+        maxWidth: windowWidth < 480 ? '100%' : '600px',
         background: 'white',
         borderRadius: '16px',
         overflow: 'hidden',
         boxShadow: '0 15px 40px rgba(5, 150, 104, 0.18)',
         height: 'auto',
-        marginTop: '-70px',
-        padding: '20px',
+        marginTop: windowWidth < 480 ? '-40px' : '-70px',
+        padding: windowWidth < 480 ? '15px' : '20px',
         position: 'relative',
-        zIndex: 10
+        zIndex: 10,
+        
       }}>
         
-        {/* Half-Circle Animation INSIDE THE CARD */}
-        <div style={{
-          position: 'absolute',
-          width: '600px',
-          height: '600px',
-          borderRadius: '50%',
-          background: '#cfe8cf9b',
-          transition: 'all 1s cubic-bezier(0.4,0,0.2,1)',
-          zIndex: 1,
-          pointerEvents: 'none',
-          ...(isLogin 
-            ? { top: '55%', right: '-35%' }
-            : { top: '-40%', right: '55%' }
-          )
-        }} />
+        {/* Half-Circle Animation */}
+        <div style={getHalfCircleStyle()} />
         
-        {/* Forms Section Only */}
+        {/* Forms Section */}
         <div style={{ 
           position: 'relative',
           overflow: 'hidden',
@@ -280,7 +347,7 @@ await updateProfile(user, { displayName: signupData.fullName });
           justifyContent: 'center',
           zIndex: 2,
           transition: 'transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)',
-          transform: isLogin ? 'translateX(-110px)' : 'translateX(110px)',
+          transform: getTranslateX(),
           willChange: 'transform'
         }}>
           
@@ -292,19 +359,25 @@ await updateProfile(user, { displayName: signupData.fullName });
               flexDirection: 'column',
               justifyContent: 'center',
             }}>
-              <div style={{ maxWidth: '280px', margin: '0 auto', width: '100%' }}>
+              <div style={{ 
+                maxWidth: windowWidth < 480 ? '260px' : '280px', 
+                margin: '0 auto', 
+                width: '100%' 
+              }}>
                 <h2 style={{ 
-                  fontSize: '22px',
+                  fontSize: windowWidth < 480 ? '20px' : '22px',
                   fontWeight: 'bold', 
                   color: '#111827',
-                  marginBottom: '6px'
+                  marginBottom: '6px',
+                  textAlign: windowWidth < 480 ? 'center' : 'left'
                 }}>
                   Reset Password
                 </h2>
                 <p style={{ 
                   color: '#6b7280',
                   marginBottom: '20px',
-                  fontSize: '13px'
+                  fontSize: windowWidth < 480 ? '12px' : '13px',
+                  textAlign: windowWidth < 480 ? 'center' : 'left'
                 }}>
                   Enter your email to receive a reset link
                 </p>
@@ -319,11 +392,11 @@ await updateProfile(user, { displayName: signupData.fullName });
                       onChange={handleForgotPasswordChange}
                       style={{
                         width: '100%',
-                        padding: '12px 14px',
+                        padding: windowWidth < 480 ? '10px 12px' : '12px 14px',
                         background: '#f9fafb',
                         border: '1px solid #d1d5db',
                         borderRadius: '10px',
-                        fontSize: '13px',
+                        fontSize: windowWidth < 480 ? '12px' : '13px',
                         color: '#111827',
                         boxSizing: 'border-box'
                       }}
@@ -335,13 +408,13 @@ await updateProfile(user, { displayName: signupData.fullName });
                     disabled={loading}
                     style={{
                       width: '100%',
-                      padding: '12px',
+                      padding: windowWidth < 480 ? '10px' : '12px',
                       background: loading ? '#0a0b0b' : '#090909',
                       color: 'white',
                       border: 'none',
                       borderRadius: '10px',
                       fontWeight: '600',
-                      fontSize: '13px',
+                      fontSize: windowWidth < 480 ? '12px' : '13px',
                       cursor: loading ? 'not-allowed' : 'pointer',
                       marginBottom: '16px',
                       transition: 'all 0.3s'
@@ -362,7 +435,7 @@ await updateProfile(user, { displayName: signupData.fullName });
                       background: 'none',
                       border: 'none',
                       cursor: 'pointer',
-                      fontSize: '12px',
+                      fontSize: windowWidth < 480 ? '11px' : '12px',
                       marginTop: '8px'
                     }}
                   >
@@ -372,7 +445,7 @@ await updateProfile(user, { displayName: signupData.fullName });
               </div>
             </div>
           ) : (
-            // Login/Signup Forms WITH 3 SMALL SOCIAL LOGOS
+            // Login/Signup Forms
             <div style={{ 
               display: 'flex',
               width: '200%',
@@ -381,27 +454,33 @@ await updateProfile(user, { displayName: signupData.fullName });
               transform: isLogin ? 'translateX(0)' : 'translateX(-50%)'
             }}>
               
-              {/* Login Form WITH 3 SMALL LOGOS */}
+              {/* Login Form */}
               <div style={{ 
                 width: '50%',
-                paddingRight: '12px',
+                paddingRight: windowWidth < 480 ? '8px' : '12px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center'
               }}>
-                <div style={{ maxWidth: '280px', margin: '0 auto', width: '100%' }}>
+                <div style={{ 
+                  maxWidth: windowWidth < 480 ? '240px' : '280px', 
+                  margin: '0 auto', 
+                  width: '100%' 
+                }}>
                   <h2 style={{ 
-                    fontSize: '22px',
+                    fontSize: windowWidth < 480 ? '20px' : '22px',
                     fontWeight: 'bold', 
                     color: '#111827',
-                    marginBottom: '6px'
+                    marginBottom: '6px',
+                    textAlign: windowWidth < 480 ? 'center' : 'left'
                   }}>
                     Welcome Back!
                   </h2>
                   <p style={{ 
                     color: '#6b7280',
                     marginBottom: '20px',
-                    fontSize: '13px'
+                    fontSize: windowWidth < 480 ? '12px' : '13px',
+                    textAlign: windowWidth < 480 ? 'center' : 'left'
                   }}>
                     Login to your account
                   </p>
@@ -416,12 +495,12 @@ await updateProfile(user, { displayName: signupData.fullName });
                         onChange={handleLoginChange}
                         style={{
                           width: '100%',
-                          padding: '12px 14px',
+                          padding: windowWidth < 480 ? '10px 12px' : '12px 14px',
                           background: '#f9fafb',
                           border: '1px solid #d1d5db',
                           borderRadius: '10px',
                           marginBottom: '14px',
-                          fontSize: '13px',
+                          fontSize: windowWidth < 480 ? '12px' : '13px',
                           color: '#111827',
                           boxSizing: 'border-box'
                         }}
@@ -434,11 +513,11 @@ await updateProfile(user, { displayName: signupData.fullName });
                         onChange={handleLoginChange}
                         style={{
                           width: '100%',
-                          padding: '12px 14px',
+                          padding: windowWidth < 480 ? '10px 12px' : '12px 14px',
                           background: '#f9fafb',
                           border: '1px solid #d1d5db',
                           borderRadius: '10px',
-                          fontSize: '13px',
+                          fontSize: windowWidth < 480 ? '12px' : '13px',
                           color: '#111827',
                           boxSizing: 'border-box'
                         }}
@@ -450,7 +529,9 @@ await updateProfile(user, { displayName: signupData.fullName });
                       alignItems: 'center', 
                       justifyContent: 'space-between',
                       marginBottom: '16px',
-                      fontSize: '12px'
+                      fontSize: windowWidth < 480 ? '11px' : '12px',
+                      flexDirection: windowWidth < 480 ? 'column' : 'row',
+                      gap: windowWidth < 480 ? '8px' : '0'
                     }}>
                       <label style={{ display: 'flex', alignItems: 'center', color: '#4b5563' }}>
                         <input 
@@ -475,7 +556,7 @@ await updateProfile(user, { displayName: signupData.fullName });
                           background: 'none',
                           border: 'none',
                           cursor: 'pointer',
-                          fontSize: '12px'
+                          fontSize: windowWidth < 480 ? '11px' : '12px'
                         }}
                       >
                         Forgot password?
@@ -487,13 +568,13 @@ await updateProfile(user, { displayName: signupData.fullName });
                       disabled={loading}
                       style={{
                         width: '100%',
-                        padding: '12px',
+                        padding: windowWidth < 480 ? '10px' : '12px',
                         background: loading ? '#070707' : '#000000',
                         color: 'white',
                         border: 'none',
                         borderRadius: '10px',
                         fontWeight: '600',
-                        fontSize: '13px',
+                        fontSize: windowWidth < 480 ? '12px' : '13px',
                         cursor: loading ? 'not-allowed' : 'pointer',
                         marginBottom: '16px',
                         transition: 'all 0.3s'
@@ -505,136 +586,65 @@ await updateProfile(user, { displayName: signupData.fullName });
                     </button>
                   </form>
                   
-                  {/* 3 SMALL SOCIAL LOGIN LOGOS */}
+                  {/* Social Login Logos */}
                   <div style={{ marginBottom: '16px' }}>
                     <div style={{ 
                       textAlign: 'center',
                       marginBottom: '12px',
-                      fontSize: '12px',
+                      fontSize: windowWidth < 480 ? '11px' : '12px',
                       color: '#6b7280'
                     }}>
                       Or continue with
                     </div>
                     
-                    {/* 3 Small Social Login Buttons */}
                     <div style={{ 
                       display: 'flex', 
                       justifyContent: 'center',
-                      gap: '10px',
+                      gap: windowWidth < 480 ? '8px' : '10px',
                       marginBottom: '12px'
                     }}>
-                      {/* Google - SMALL */}
-                      <button 
-                        type="button"
-                        onClick={() => handleSocialLogin('google')}
-                        style={{
-                          width: '36px',
-                          height: '36px',
-                          padding: '0',
-                          background: '#ffffff',
-                          border: '1px solid #d1d5db',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.2s'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.borderColor = '#4285F4';
-                          e.target.style.boxShadow = '0 2px 6px rgba(66, 133, 244, 0.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.borderColor = '#d1d5db';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                      >
-                        <img 
-                          src={SOCIAL_LOGOS.google} 
-                          alt="Google" 
-                          style={{ 
-                            width: '18px', 
-                            height: '18px'
-                          }} 
-                        />
-                      </button>
-                      
-                      {/* Facebook - SMALL */}
-                      <button 
-                        type="button"
-                        onClick={() => handleSocialLogin('facebook')}
-                        style={{
-                          width: '36px',
-                          height: '36px',
-                          padding: '0',
-                          background: '#ffffff',
-                          border: '1px solid #d1d5db',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.2s'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.borderColor = '#1877F2';
-                          e.target.style.boxShadow = '0 2px 6px rgba(24, 119, 242, 0.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.borderColor = '#d1d5db';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                      >
-                        <img 
-                          src={SOCIAL_LOGOS.facebook} 
-                          alt="Facebook" 
-                          style={{ 
-                            width: '18px', 
-                            height: '18px'
-                          }} 
-                        />
-                      </button>
-                      
-                      {/* GitHub - SMALL */}
-                      <button 
-                        type="button"
-                        onClick={() => handleSocialLogin('github')}
-                        style={{
-                          width: '36px',
-                          height: '36px',
-                          padding: '0',
-                          background: '#ffffff',
-                          border: '1px solid #d1d5db',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.2s'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.borderColor = '#333333';
-                          e.target.style.boxShadow = '0 2px 6px rgba(51, 51, 51, 0.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.borderColor = '#d1d5db';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                      >
-                        <img 
-                          src={SOCIAL_LOGOS.github} 
-                          alt="GitHub" 
-                          style={{ 
-                            width: '18px', 
-                            height: '18px'
-                          }} 
-                        />
-                      </button>
+                      {['google', 'facebook', 'github'].map((provider) => (
+                        <button 
+                          key={provider}
+                          type="button"
+                          onClick={() => handleSocialLogin(provider)}
+                          style={{
+                            width: windowWidth < 480 ? '32px' : '36px',
+                            height: windowWidth < 480 ? '32px' : '36px',
+                            padding: '0',
+                            background: '#ffffff',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.borderColor = provider === 'google' ? '#4285F4' : provider === 'facebook' ? '#1877F2' : '#333333';
+                            e.target.style.boxShadow = `0 2px 6px rgba(${provider === 'google' ? '66, 133, 244' : provider === 'facebook' ? '24, 119, 242' : '51, 51, 51'}, 0.2)`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.borderColor = '#d1d5db';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                        >
+                          <img 
+                            src={SOCIAL_LOGOS[provider]} 
+                            alt={provider} 
+                            style={{ 
+                              width: windowWidth < 480 ? '16px' : '18px', 
+                              height: windowWidth < 480 ? '16px' : '18px'
+                            }} 
+                          />
+                        </button>
+                      ))}
                     </div>
                   </div>
                   
                   <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                    <p style={{ color: '#6b7280', fontSize: '12px' }}>
+                    <p style={{ color: '#6b7280', fontSize: windowWidth < 480 ? '11px' : '12px' }}>
                       Don't have an account?{" "}
                       <button 
                         type="button"
@@ -645,7 +655,7 @@ await updateProfile(user, { displayName: signupData.fullName });
                           background: 'none',
                           border: 'none',
                           cursor: 'pointer',
-                          fontSize: '12px'
+                          fontSize: windowWidth < 480 ? '11px' : '12px'
                         }}
                       >
                         Sign up here
@@ -658,24 +668,30 @@ await updateProfile(user, { displayName: signupData.fullName });
               {/* Signup Form */}
               <div style={{ 
                 width: '50%',
-                paddingLeft: '12px',
+                paddingLeft: windowWidth < 480 ? '8px' : '12px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center'
               }}>
-                <div style={{ maxWidth: '280px', margin: '0 auto', width: '100%' }}>
+                <div style={{ 
+                  maxWidth: windowWidth < 480 ? '240px' : '280px', 
+                  margin: '0 auto', 
+                  width: '100%' 
+                }}>
                   <h2 style={{ 
-                    fontSize: '22px',
+                    fontSize: windowWidth < 480 ? '20px' : '22px',
                     fontWeight: 'bold', 
                     color: '#111827',
-                    marginBottom: '6px'
+                    marginBottom: '6px',
+                    textAlign: windowWidth < 480 ? 'center' : 'left'
                   }}>
                     Join OspyTech
                   </h2>
                   <p style={{ 
                     color: '#6b7280',
                     marginBottom: '20px',
-                    fontSize: '13px'
+                    fontSize: windowWidth < 480 ? '12px' : '13px',
+                    textAlign: windowWidth < 480 ? 'center' : 'left'
                   }}>
                     Create your account
                   </p>
@@ -690,12 +706,12 @@ await updateProfile(user, { displayName: signupData.fullName });
                         onChange={handleSignupChange}
                         style={{
                           width: '100%',
-                          padding: '12px 14px',
+                          padding: windowWidth < 480 ? '10px 12px' : '12px 14px',
                           background: '#f9fafb',
                           border: '1px solid #d1d5db',
                           borderRadius: '10px',
                           marginBottom: '14px',
-                          fontSize: '13px',
+                          fontSize: windowWidth < 480 ? '12px' : '13px',
                           color: '#111827',
                           boxSizing: 'border-box'
                         }}
@@ -708,12 +724,12 @@ await updateProfile(user, { displayName: signupData.fullName });
                         onChange={handleSignupChange}
                         style={{
                           width: '100%',
-                          padding: '12px 14px',
+                          padding: windowWidth < 480 ? '10px 12px' : '12px 14px',
                           background: '#f9fafb',
                           border: '1px solid #d1d5db',
                           borderRadius: '10px',
                           marginBottom: '14px',
-                          fontSize: '13px',
+                          fontSize: windowWidth < 480 ? '12px' : '13px',
                           color: '#111827',
                           boxSizing: 'border-box'
                         }}
@@ -726,12 +742,12 @@ await updateProfile(user, { displayName: signupData.fullName });
                         onChange={handleSignupChange}
                         style={{
                           width: '100%',
-                          padding: '12px 14px',
+                          padding: windowWidth < 480 ? '10px 12px' : '12px 14px',
                           background: '#f9fafb',
                           border: '1px solid #d1d5db',
                           borderRadius: '10px',
                           marginBottom: '14px',
-                          fontSize: '13px',
+                          fontSize: windowWidth < 480 ? '12px' : '13px',
                           color: '#111827',
                           boxSizing: 'border-box'
                         }}
@@ -744,11 +760,11 @@ await updateProfile(user, { displayName: signupData.fullName });
                         onChange={handleSignupChange}
                         style={{
                           width: '100%',
-                          padding: '12px 14px',
+                          padding: windowWidth < 480 ? '10px 12px' : '12px 14px',
                           background: '#f9fafb',
                           border: '1px solid #d1d5db',
                           borderRadius: '10px',
-                          fontSize: '13px',
+                          fontSize: windowWidth < 480 ? '12px' : '13px',
                           color: '#111827',
                           boxSizing: 'border-box'
                         }}
@@ -759,7 +775,7 @@ await updateProfile(user, { displayName: signupData.fullName });
                       display: 'flex', 
                       alignItems: 'flex-start', 
                       marginBottom: '16px',
-                      fontSize: '11px'
+                      fontSize: windowWidth < 480 ? '10px' : '11px'
                     }}>
                       <input 
                         type="checkbox" 
@@ -771,7 +787,8 @@ await updateProfile(user, { displayName: signupData.fullName });
                           marginRight: '6px',
                           width: '12px',
                           height: '12px',
-                          marginTop: '2px'
+                          marginTop: '2px',
+                          flexShrink: 0
                         }} 
                       />
                       <label htmlFor="acceptTerms" style={{ color: '#4b5563' }}>
@@ -784,13 +801,13 @@ await updateProfile(user, { displayName: signupData.fullName });
                       disabled={loading}
                       style={{
                         width: '100%',
-                        padding: '12px',
+                        padding: windowWidth < 480 ? '10px' : '12px',
                         background: loading ? '#000000' : '#000000',
                         color: 'white',
                         border: 'none',
                         borderRadius: '10px',
                         fontWeight: '600',
-                        fontSize: '13px',
+                        fontSize: windowWidth < 480 ? '12px' : '13px',
                         cursor: loading ? 'not-allowed' : 'pointer',
                         marginBottom: '16px',
                         transition: 'all 0.3s'
@@ -803,7 +820,7 @@ await updateProfile(user, { displayName: signupData.fullName });
                   </form>
                   
                   <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                    <p style={{ color: '#6b7280', fontSize: '12px' }}>
+                    <p style={{ color: '#6b7280', fontSize: windowWidth < 480 ? '11px' : '12px' }}>
                       Already have an account?{" "}
                       <button 
                         type="button"
@@ -814,7 +831,7 @@ await updateProfile(user, { displayName: signupData.fullName });
                           background: 'none',
                           border: 'none',
                           cursor: 'pointer',
-                          fontSize: '12px'
+                          fontSize: windowWidth < 480 ? '11px' : '12px'
                         }}
                       >
                         Login here
@@ -826,22 +843,22 @@ await updateProfile(user, { displayName: signupData.fullName });
             </div>
           )}
           
-          {/* Form Toggle Dots (Hide for forgot password) */}
+          {/* Form Toggle Dots */}
           {!showForgotPassword && (
             <div style={{
               position: 'absolute',
-              bottom: '-25px',
+              bottom: windowWidth < 480 ? '-20px' : '-25px',
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
-              gap: '6px',
+              gap: windowWidth < 480 ? '5px' : '6px',
               zIndex: 3
             }}>
               <button
                 onClick={() => handleTabChange('login')}
                 style={{
-                  width: '6px',
-                  height: '6px',
+                  width: windowWidth < 480 ? '5px' : '6px',
+                  height: windowWidth < 480 ? '5px' : '6px',
                   borderRadius: '50%',
                   border: 'none',
                   padding: 0,
@@ -853,8 +870,8 @@ await updateProfile(user, { displayName: signupData.fullName });
               <button
                 onClick={() => handleTabChange('signup')}
                 style={{
-                  width: '6px',
-                  height: '6px',
+                  width: windowWidth < 480 ? '5px' : '6px',
+                  height: windowWidth < 480 ? '5px' : '6px',
                   borderRadius: '50%',
                   border: 'none',
                   padding: 0,
@@ -870,6 +887,7 @@ await updateProfile(user, { displayName: signupData.fullName });
     </div>
   );
 }
+
 export default function AuthPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
